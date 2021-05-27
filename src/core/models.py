@@ -13,4 +13,4 @@ class CustomUser(AbstractUser):
 
 
     def __str__(self) -> str:
-        return '{0} {1} {2}'.format(self.username, self.first_name, self.last_name)
+        return '{0} : {1} {2}'.format(self.username, self.first_name, self.last_name)

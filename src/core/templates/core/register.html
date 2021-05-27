@@ -1,8 +1,9 @@
 {% extends 'core/base.html' %}
 
 {% block content %}
+{% include 'core/menu.html' %}
     <form action="" method="post">
-        {{ form|as_p }}
+        {{ form }}
         <div class="form-group">
             <input type="submit" value="Login">
         </div>
