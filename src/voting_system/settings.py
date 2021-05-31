@@ -41,6 +41,12 @@ INSTALLED_APPS = [
 
     # apps
     'core',
+    'participants',
+    'judges',
+    'polls',
+
+    # 3rd party libs
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -142,10 +148,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'core.CustomUser'
 
 # authentication urls
-LOGIN_URL = 'login/'
+LOGIN_URL = '/login/'
 
-LOGIN_REDIRECT_URL = 'dashboard/'
+LOGIN_REDIRECT_URL = 'dispatcher/'
 
-LOGOUT_URL = 'logout/'
+LOGOUT_URL = '/logout/'
 
 LOGOUT_REDIRECT_URL = '/'
+
+# Crispy Forms
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

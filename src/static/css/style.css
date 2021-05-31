@@ -1,6 +1,10 @@
 *{
     scroll-behavior: smooth;
     --white: #fff;
+    --dark: #333;
+    --grey: #aaa;
+    --light-grey: #ddd;
+    --lighter-grey: #f0f0f0;
 }
 
 body{
@@ -55,4 +59,124 @@ body{
     width: 150px;
     margin: 5px 10px;
     padding: 10px;
+}
+
+/* Auth Forms */
+.auth-form-container{
+    /* width: 40rem;
+    padding: auto; */
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.auth-form-container form{
+    /* border-radius: 10px; */
+    /* border: 1px solid #333; */
+    width: 50rem;
+    padding: 15px;
+    height: 70vh;
+    background: #eee;
+}
+.auth-form-container input[class="auth-btn"]{
+    background: #333;
+    color: var(--white);
+    width: 100%;
+    padding: 10px;
+    font-weight: bolder;
+    border: none;
+    transition: .3s;
+    border-radius: 5px;
+    border: 1px solid var(--dark);
+}
+.auth-form-container input[class="auth-btn"]:hover{
+    background: transparent;
+    color: var(--dark);
+}
+.auth-form-container .form-controls{
+    width: 40px;
+}
+.auth-form-container .form-controls a{
+    color: var(--dark);
+    transition: .4s;
+}.auth-form-container .form-controls a:hover{
+    color: var(--grey);
+}
+
+
+/* Dashboard */
+.header-content{
+    background: var(--white);
+    box-shadow: 1px 1px 10px var(--light-grey);
+    padding: 14px 10px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 999;
+}
+.header-content button.menu-btn{
+    border: none;
+    background: none;
+}
+.main-wrapper{
+    overflow: hidden;
+    height: 95vh;
+    padding-top: 2rem;
+    background: var(--lighter-grey);
+}
+.side-menu{
+    width: 20%;
+    height: 100vh;
+    background: var(--white);
+    position: relative;
+}
+.ads-input-wrapper{
+    box-shadow: 1px 1px 3px var(--light-grey);
+    border-radius: 20px;
+    overflow: hidden;
+}
+.ads-input-wrapper input,
+.ads-input-wrapper button{
+    border: none;
+}
+.ads-input-wrapper input{
+    padding: 0px 7px;
+    width: 75%}
+.ads-input-wrapper button{
+    color: var(--white);
+    flex-grow: 1;
+    padding: 5px;
+}
+.main-content{
+    flex-grow: 1;
+}
+
+.participant-list{
+    height: 50vh;
+    overflow-y: auto;
+}
+.p-image{
+    width: 34px;
+    height: 34px;
+    border-radius: 50px;
+}
+.p-image img{
+    width: 100%;
+    height: auto;
+}
+.p-text{
+    margin-left: 10px;
+}
+
+.profile-wrapper{
+    background: var(--white);
+    border-radius: 10px;
+    width: 50vw;
+    margin: auto;
+    padding: 10px;
+}
+.p-image-lg{
+    width: 10rem;
+    height: 10rem;
+    position: relative;
 }

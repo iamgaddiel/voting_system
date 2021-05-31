@@ -6,12 +6,15 @@
         <div class="banner">
             <div class="banner-content">
                 <div class="banner-text">
-                    <h1 class="text-uppercase text-bold text-center animate__animated animate__slideInLeft">Code For Cash</h1>
+                    <h1 class="text-uppercase text-bold text-center animate__animated animate__slideInLeft">
+                        Code 
+                        <span class="bg-light text-dark p-3">For</span> 
+                        Cash</h1>
                     <h4 class="text-center animate__animated animate__slideInLeft animate__slow mt-4">Hackaton</h4>
 
                     <div class="banner-controls">
-                        <a href="" class="btn btn-outline-light">Get Started</a>
-                        <a href="" class="btn btn btn-outline-light">Login</a>
+                        <a href="{% url 'registration' %}" class="btn btn-outline-light">Get Started</a>
+                        <a href="{% url 'login' %}" class="btn btn btn-outline-light">Login</a>
                     </div>
                 </div>
             </div>

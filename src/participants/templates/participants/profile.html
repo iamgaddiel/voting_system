@@ -1,0 +1,46 @@
+{% extends 'participants/dashboard.html' %}
+{% load static %}
+
+
+{% block dashboard_content %}
+<div class="d-flex">
+    <div class="side-menu p-3">
+        <div class="voting-address">
+            <form method="POST" id="addressSearchForm">
+                {% csrf_token %}
+                <div class="ads-input-wrapper d-flex my-5">
+                    <input type="text" name="pollAddress" id="" placeholder="Polling address">
+                    <button type="submit" id="join-btn" class="bg-primary">
+                        join
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div class="address-list">
+            <ul class="list-group">
+                <li class="list-group-item"><span>poll 1</span></li>
+                <li class="list-group-item"><span>poll 1</span></li>
+                <li class="list-group-item"><span>poll 1</span></li>
+                <li class="list-group-item"><span>poll 1</span></li>
+            </ul>
+        </div>
+    </div>
+    <!-- main content-->
+    <div class="main-content p-3 mt-4">
+        <div class="profile-wrapper">
+            <div class="profile-content">
+                <div class="p-image mx-auto p-image-lg animate__animated animate__zoomIn animate__faster">
+                    <img src="{% static 'images/bt2.png'%}" alt="">
+                </div>
+            </div>
+            <div class="profile-text">
+                <h1 class="text-center text-muted">John Doe</h1>
+                <h6 class="text-center text-muted">example@gmail.com</h6>
+                <h4 class="text-center text-muted">09012123234</h4>
+                <h5 class="text-center text-muted">Male</h5>
+                <h6 class="text-center text-muted">12/12/32</h6>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

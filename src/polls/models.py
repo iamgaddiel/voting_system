@@ -1,12 +1,13 @@
 from django.db import models
 
 
-class Competitor(models.Model):
-    pass
+class Polls(models.Model):
+    title = models.CharField(max_length=200, unique=True)
+    link = models.CharField(max_length=300)
+    start_date = models.DateTimeField()
+    end_date = models.DateTimeField()
+    is_active = models.BooleanField(default=True)
 
-class Judge(models.Model):
-    pass
-
-class Vote(models.Model):
-    pass
+    def __str__(self) -> str:
+        return self.title
 

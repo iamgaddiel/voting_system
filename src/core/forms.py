@@ -1,20 +1,17 @@
 from django.db.models.base import Model
+from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from .models import CustomUser
 
 
-class UserCreationForm(forms.ModelForm):
-    password_2 = forms.CharField(
-        min_length=8, 
-    )
+class UserCreationForm(UserCreationForm):
     class Meta:
         model = CustomUser
         fields = [
             'username',
             'first_name', 
             'last_name', 
-            'password', 
-            'password_2', 
             'email', 
-            'account_type'
+            'dob',
+            'gender'
         ]
