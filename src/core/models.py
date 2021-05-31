@@ -5,11 +5,12 @@ from django.contrib.auth.models import AbstractUser
 
 class CustomUser(AbstractUser):
     GENDER = [
-        ('M', 'Male'),
-        ('F', 'Female'),
+        ('Male', 'Male'),
+        ('Female', 'Female'),
     ]
     
     id =  models.UUIDField(unique=True, primary_key=True, default=uuid.uuid4, editable=False)
+    email = models.EmailField(unique=True)
     gender = models.CharField(max_length=6, choices=GENDER, default=GENDER[0])
     dob = models.DateField(null=True)
     is_participant = models.BooleanField(default=False)

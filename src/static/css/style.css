@@ -141,7 +141,9 @@ body{
 }
 .ads-input-wrapper input{
     padding: 0px 7px;
-    width: 75%}
+    width: 75%;
+    font-size: 13px;
+}
 .ads-input-wrapper button{
     color: var(--white);
     flex-grow: 1;

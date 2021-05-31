@@ -10,8 +10,9 @@
                 <button class="menu-btn"><i class="fa fa-bars"></i></button>
             </div>
             <div class="header-controls">
-                <a href="{% url 'participant_dashboard' %}" class="text-muted mx-3"><i class="fa fa-home"></i></a>
-                <a href="{% url 'logout' %}" class="text-danger ml-3"><i class="fa fa-power-off"></i></a>
+                <a href="{% url 'participant_dashboard' %}" class="text-muted"><i class="fa fa-home"></i></a>
+                <a href="{% url 'participant_profile' %}" class="text-primary mx-3"><i class="fa fa-user"></i></a>
+                <a href="{% url 'logout' %}" class="text-danger ml-3"><i class="fa fa-sign-out-alt"></i></a>
             </div>
             <div class="avatar d-flex align-items-center">
                 <span class="text-dark mx-3">@{{ user.username }}</span>
@@ -26,14 +27,14 @@
 </header>
 <main>
     <div class="main-wrapper">
-        {% block dashboard_content %}
         <div class="d-flex">
+            {% block side_menu %}
             <div class="side-menu p-3">
                 <div class="voting-address">
                     <form method="POST" id="addressSearchForm">
                         {% csrf_token %}
                         <div class="ads-input-wrapper d-flex my-5">
-                            <input type="text" name="pollAddress" id="" placeholder="Polling address">
+                            <input type="text" name="pollAddress" id="pollAddress" placeholder="Polling address">
                             <button type="submit" id="join-btn" class="bg-primary">
                                 join
                             </button>
@@ -42,180 +43,27 @@
                 </div>
                 <div class="address-list">
                     <ul class="list-group">
-                        <li class="list-group-item"><span>poll 1</span></li>
-                        <li class="list-group-item"><span>poll 1</span></li>
-                        <li class="list-group-item"><span>poll 1</span></li>
-                        <li class="list-group-item"><span>poll 1</span></li>
+                        {% for poll in polls %}
+                        <li class="list-group-item">
+                            <a href="{% url 'participant_poll' poll.polls.address %}">
+                                <small>{{ poll.polls.title }}</small>
+                            </a>
+                        </li>
+                        {% empty %}
+                        <li class="list-group-item"><small>You've not joined any polls yet</small></li>
+                        {% endfor %}
                     </ul>
                 </div>
-                
+
             </div>
+            {% endblock %}
+            {% block dashboard_content %}
             <!-- main content-->
             <div class="main-content p-3 mt-4">
-                <div class="db-banner-wrapper container">
-                    <div class="row justify-content-even align-items-center">
-                        <!-- No of contestants -->
-                        <div class="col-sm-12 col-md-3">
-                            <div class="card">
-                                <div class="card-content">
-                                    <div class="d-flex align-items-center">
-                                        <div class="card-image p-4 bg-primary">
-                                            <i class="fa fa-users fa-3x text-light"></i>
-                                        </div>
-                                        <div class="card-text px-2 text-muted">
-                                            <h6">Participants</h6>
-                                                <h3 class="font-weight-bold display-5">4</h3>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- No of contestants -->
-                        <div class="col-sm-12 col-md-3">
-                            <div class="card">
-                                <div class="card-content">
-                                    <div class="d-flex align-items-center">
-                                        <div class="card-image p-4 bg-secondary">
-                                            <i class="fa fa-users fa-3x text-light"></i>
-                                        </div>
-                                        <div class="card-text px-2 text-muted">
-                                            <h6">Participants</h6>
-                                                <h3 class="font-weight-bold display-5">4</h3>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- No of contestants -->
-                        <div class="col-sm-12 col-md-3">
-                            <div class="card">
-                                <div class="card-content">
-                                    <div class="d-flex align-items-center">
-                                        <div class="card-image p-4 bg-danger">
-                                            <i class="fa fa-users fa-3x text-light"></i>
-                                        </div>
-                                        <div class="card-text px-2 text-muted">
-                                            <h6">Participants</h6>
-                                                <h3 class="font-weight-bold display-5">4</h3>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- No of contestants -->
-                        <div class="col-sm-12 col-md-3">
-                            <div class="card">
-                                <div class="card-content">
-                                    <div class="d-flex align-items-center">
-                                        <div class="card-image p-4 bg-primary">
-                                            <i class="fa fa-users fa-3x text-light"></i>
-                                        </div>
-                                        <div class="card-text px-2 text-muted">
-                                            <h6">Participants</h6>
-                                                <h3 class="font-weight-bold display-5">4</h3>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- ksjljslfjls -->
-                <div class="participant-list-wrapper mt-5 pb-5 container">
-                    <div class="row justify-content-even">
-                        <div class="col-sm-12 col-md-4">
-                            <h5 class="text-muted">Contestants</h5>
-                            <ul class="list-group participant-list">
-                                <li class="list-group-item">
-                                    <div class="d-flex align-items-center">
-                                        <div class="p-image">
-                                            <img src="{% static 'images/bt2.png'%}" alt="">
-                                        </div>
-                                        <div class="p-text">
-                                            <span>John Doe</span>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="list-group-item">
-                                    <div class="d-flex align-items-center">
-                                        <div class="p-image">
-                                            <img src="{% static 'images/bt2.png'%}" alt="">
-                                        </div>
-                                        <div class="p-text">
-                                            <span>John Doe</span>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="list-group-item">
-                                    <div class="d-flex align-items-center">
-                                        <div class="p-image">
-                                            <img src="{% static 'images/bt2.png'%}" alt="">
-                                        </div>
-                                        <div class="p-text">
-                                            <span>John Doe</span>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <!-- Judges List -->
-                        <div class="col-sm-12 col-md-4">
-                        <h5 class="text-muted">Judges</h5>
-                            <ul class="list-group participant-list">
-                                <li class="list-group-item">
-                                    <div class="d-flex align-items-center">
-                                        <div class="p-image">
-                                            <img src="{% static 'images/bt1.png'%}" alt="">
-                                        </div>
-                                        <div class="p-text">
-                                            <span>John Doe</span>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="list-group-item">
-                                    <div class="d-flex align-items-center">
-                                        <div class="p-image">
-                                            <img src="{% static 'images/bt1.png'%}" alt="">
-                                        </div>
-                                        <div class="p-text">
-                                            <span>John Doe</span>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="list-group-item">
-                                    <div class="d-flex align-items-center">
-                                        <div class="p-image">
-                                            <img src="{% static 'images/bt1.png'%}" alt="">
-                                        </div>
-                                        <div class="p-text">
-                                            <span>John Doe</span>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <!-- upload link -->
-                        <div class="col-sm-12 col-md-4">
-                            <div class="upload-link">
-                                <form method="POST" id="addressSearchForm">
-                                    {% csrf_token %}
-                                    <div class="ads-input-wrapper d-flex my-5">
-                                        <input type="text" name="pollAddress" id="" placeholder="Project link" >
-                                        <button type="submit" id="join-btn" class="bg-primary">
-                                            <i class="fa fa-upload"></i>
-                                        </button>
-                                    </div>
-                                    <p class="text-center text-muted">https://www.google.com/</p>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <h1>Welcome to your dashboard</h1>
             </div>
+            {% endblock %}
         </div>
-        {% endblock %}
     </div>
 </main>
 {% endblock %}

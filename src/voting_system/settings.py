@@ -47,6 +47,7 @@ INSTALLED_APPS = [
 
     # 3rd party libs
     'crispy_forms',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -57,6 +58,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware', #CORS
 ]
 
 ROOT_URLCONF = 'voting_system.urls'
@@ -158,3 +160,27 @@ LOGOUT_REDIRECT_URL = '/'
 
 # Crispy Forms
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+# #CORS
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8080",
+    "http://127.0.0.1:8000"
+]
+
+CORS_ALLOW_METHODS = [
+    'GET',
+    'OPTIONS',
+    'POST',
+]
+
+# CORS_ALLOW_HEADERS = [
+#     'accept',
+#     'accept-encoding',
+#     'authorization',
+#     'content-type',
+#     'dnt',
+#     'origin',
+#     'user-agent',
+#     'x-csrftoken',
+#     'x-requested-with',
+# ]

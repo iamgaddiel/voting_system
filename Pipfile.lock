@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "162c70470c6d56d11821d0cbe62476a412784ba977be72e7f9d296e63429cb65"
+            "sha256": "ed0c11eec6f8c7552b8c0db29927805cf105a1ca254d63b53c1720cf474ec095"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -31,6 +31,14 @@
             ],
             "index": "pypi",
             "version": "==3.2.3"
+        },
+        "django-cors-headers": {
+            "hashes": [
+                "sha256:1ac2b1213de75a251e2ba04448da15f99bcfcbe164288ae6b5ff929dc49b372f",
+                "sha256:96069c4aaacace786a34ee7894ff680780ec2644e4268b31181044410fecd12e"
+            ],
+            "index": "pypi",
+            "version": "==3.7.0"
         },
         "django-crispy-forms": {
             "hashes": [
@@ -86,6 +94,14 @@
                 "sha256:eb10ce3e7736052ed3623d49975ce333bcd712c7bb19a58b9e2089d4057d0798"
             ],
             "version": "==2021.1"
+        },
+        "shortuuid": {
+            "hashes": [
+                "sha256:3c11d2007b915c43bee3e10625f068d8a349e04f0d81f08f5fa08507427ebf1f",
+                "sha256:492c7402ff91beb1342a5898bd61ea953985bf24a41cd9f247409aa2e03c8f77"
+            ],
+            "index": "pypi",
+            "version": "==1.0.1"
         },
         "sqlparse": {
             "hashes": [
