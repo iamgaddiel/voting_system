@@ -9,7 +9,7 @@ class Polls(models.Model):
     is_active = models.BooleanField(default=True)
 
     def __str__(self) -> str:
-        return self.title
+        return "{0} | {1}".format(self.title, self.address)
 
     def save(self, *args, **kwargs):
         import shortuuid

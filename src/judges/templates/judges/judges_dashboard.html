@@ -33,7 +33,7 @@
                                         </div>
                                         <div class="card-text px-2 text-muted">
                                             <h6">Judges</h6>
-                                                <h3 class="font-weight-bold display-5">4</h3>
+                                                <h3 class="font-weight-bold display-5">{{ judges.count }}</h3>
                                         </div>
                                     </div>
                                 </div>
@@ -77,6 +77,7 @@
                 <!-- stats -->
                 <div class="participant-list-wrapper mt-5 pb-5 container">
                     <div class="row justify-content-even">
+                        <!-- participants list -->
                         <div class="col-sm-12 col-md-4">
                             <h5 class="text-muted">Contestants</h5>
                             <ul class="list-group participant-list">
@@ -84,77 +85,57 @@
                                 <li class="list-group-item">
                                     <div class="d-flex align-items-center">
                                         <div class="p-image">
-                                            <img src="{% static 'images/bt2.png'%}" alt="">
+                                            <img src="{% static 'images/bt1.png'%}" alt="">
                                         </div>
                                         <div class="p-text">
-                                            {% if user.username == users.participant.user.username %}
-                                            <span>You</span>
-                                            {% else %}
                                             <span>{{ users.participant.user.username}}</span>
-                                            {% endif %}
                                         </div>
                                     </div>
                                 </li>
                                 {% endfor %}
                             </ul>
                         </div>
-                        <!-- Judges List -->
+                        <!-- Participant List -->
                         <div class="col-sm-12 col-md-4">
-                            <h5 class="text-muted">Judges</h5>
-                            <ul class="list-group participant-list">
-                                <li class="list-group-item">
-                                    <div class="d-flex align-items-center">
-                                        <div class="p-image">
-                                            <img src="{% static 'images/bt1.png'%}" alt="">
+                            <h5 class="text-muted">Detail</h5>
+                            <div class="detail-wrapper">
+                                <div class="detail-content">
+                                    <div class="card p-3">
+                                        <div class="detail-image">
+                                            <div class="rounded-circle mx-auto" style="width: 50px; height: 50px;">
+                                                <img src="{% static 'images/user.svg' %}" alt="profile-skeleton" style="width: auto; height: 100%;">
+                                            </div>
                                         </div>
-                                        <div class="p-text">
-                                            <span>John Doe</span>
+                                        <div class="detail-text">
+                                            <div class="text-wrapper">
+                                                <span><small class="text-muted">Name</small></span>
+                                                <h6>John Doe</h6>
+                                            </div>
+                                            <div class="text-wrapper">
+                                                <span><small class="text-muted">Email</small></span>
+                                                <h6>example@example.com</h6>
+                                            </div>
+                                            <div class="text-wrapper">
+                                                <span><small class="text-muted">Stack</small></span>
+                                                <h6>Fullstack</h6>
+                                            </div>
+                                            <div class="text-wrapper">
+                                                <span><small class="text-muted">Project Link</small></span>
+                                                <h6>
+                                                    <a href="https://www.google.com/" target="_blank" rel="noopener noreferrer" class="nav-link p-0">
+                                                        https://www.google.com/
+                                                    </a>
+                                                </h6>
+                                            </div>
+                                        </div>
+                                        <div class="detail-action d-flex justify-content-center mt-3">
+                                            <a href="" class="btn btn-primary" aria-disabled="true">
+                                                <i class="fa fa-thumbs-up mr-2"></i>
+                                                <span>Vote</span>
+                                            </a>
                                         </div>
                                     </div>
-                                </li>
-                                <li class="list-group-item">
-                                    <div class="d-flex align-items-center">
-                                        <div class="p-image">
-                                            <img src="{% static 'images/bt1.png'%}" alt="">
-                                        </div>
-                                        <div class="p-text">
-                                            <span>John Doe</span>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="list-group-item">
-                                    <div class="d-flex align-items-center">
-                                        <div class="p-image">
-                                            <img src="{% static 'images/bt1.png'%}" alt="">
-                                        </div>
-                                        <div class="p-text">
-                                            <span>John Doe</span>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <!-- upload link -->
-                        <div class="col-sm-12 col-md-4">
-                            <div class="upload-link">
-                                <form method="POST" id="projectLinkForm">
-                                    {% csrf_token %}
-                                    <div class="ads-input-wrapper d-flex my-5">
-                                        <input type="text" name="projectLink" id="projectLink" placeholder="Project link" {% if current_poll.is_uploaded %}disabled{% endif %}>
-                                        <input type="hidden" name="pollAddress" value="{{poll_address}}">
-                                        <button type="submit" id="join-btn" class="bg-primary">
-                                            <i class="fa fa-upload"></i>
-                                        </button>
-                                    </div>
-                                    <p class="text-center text-light btn btn-primary">
-                                        {% if current_poll.project_link != "" %}
-                                            {{ current_poll.project_link }}
-                                        {% else %}
-                                            Not Found
-                                        {% endif %}
-                                    </p>
-                                </form>
+                                </div>
                             </div>
                         </div>
                     </div>

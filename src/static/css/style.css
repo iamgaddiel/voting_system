@@ -119,7 +119,7 @@ body{
     background: none;
 }
 .main-wrapper{
-    overflow: hidden;
+    overflow-y: auto;
     height: 95vh;
     padding-top: 2rem;
     background: var(--lighter-grey);

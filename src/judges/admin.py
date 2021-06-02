@@ -1,3 +1,6 @@
 from django.contrib import admin
+from .models import JudgeProfile, JudgesPoll
 
-# Register your models here.
+
+admin.site.register(JudgesPoll)
+admin.site.register(JudgeProfile)

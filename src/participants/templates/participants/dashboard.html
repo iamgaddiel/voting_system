@@ -10,8 +10,14 @@
                 <button class="menu-btn"><i class="fa fa-bars"></i></button>
             </div>
             <div class="header-controls">
+                {% if user.is_participant %}
                 <a href="{% url 'participant_dashboard' %}" class="text-muted"><i class="fa fa-home"></i></a>
                 <a href="{% url 'participant_profile' %}" class="text-primary mx-3"><i class="fa fa-user"></i></a>
+                {% elif user.is_judge %}
+                <a href="{% url 'judges_dashboard' %}" class="text-muted"><i class="fa fa-home"></i></a>
+                <a href="{% url 'participant_profile' %}" class="text-primary mx-3"><i class="fa fa-user"></i></a>
+                {% endif %}
+                <a href="" class="text-success ml-3"><i class="fa fa-bar-chart" aria-hidden="true"></i></a>
                 <a href="{% url 'logout' %}" class="text-danger ml-3"><i class="fa fa-sign-out-alt"></i></a>
             </div>
             <div class="avatar d-flex align-items-center">
@@ -35,6 +41,7 @@
                         {% csrf_token %}
                         <div class="ads-input-wrapper d-flex my-5">
                             <input type="text" name="pollAddress" id="pollAddress" placeholder="Polling address">
+                            <input type="hidden" name="account_type" value="{{ account_type }}">
                             <button type="submit" id="join-btn" class="bg-primary">
                                 join
                             </button>
@@ -45,9 +52,15 @@
                     <ul class="list-group">
                         {% for poll in polls %}
                         <li class="list-group-item">
-                            <a href="{% url 'participant_poll' poll.polls.address %}">
+                            {% if user.is_participant %}
+                            <a href="{% url 'participant_poll' poll.polls.address %}" class="nav-link p-0">
                                 <small>{{ poll.polls.title }}</small>
                             </a>
+                            {%  elif user.is_judge %}
+                            <a href="{% url 'judges_poll_dashboard' poll.polls.address %}" class="nav-link p-0">
+                                <small>{{ poll.polls.title }}</small>
+                            </a>
+                            {% endif %}
                         </li>
                         {% empty %}
                         <li class="list-group-item"><small>You've not joined any polls yet</small></li>

@@ -5,6 +5,7 @@ from django.urls import reverse_lazy
 from django.shortcuts import redirect, render
 from django.views.generic import TemplateView, CreateView, View
 from django.contrib.auth.mixins import LoginRequiredMixin
+from judges.views import JudgesDashboard
 
 from participants.models import Participant
 from .models import CustomUser
@@ -44,6 +45,9 @@ class Regisration(CreateView):
             
         if account_type == "judge":
             form.instance.is_judge = True
+            form.save()
+            user = CustomUser.objects.get(username=username)
+            JudgesDashboard.objects.create(user=user)
 
         return redirect('login')
     
