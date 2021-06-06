@@ -19,7 +19,7 @@ class CustomUser(AbstractUser):
 
 
     def __str__(self) -> str:
-        return '{0} : {1} {2}'.format(self.username, self.first_name, self.last_name)
+        return 'username: {0} | {1} {2}'.format(self.username, self.first_name, self.last_name)
 
     # def get_absolute_url(self):
     #     pass

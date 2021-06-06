@@ -21,7 +21,14 @@
                 <a href="{% url 'logout' %}" class="text-danger ml-3"><i class="fa fa-sign-out-alt"></i></a>
             </div>
             <div class="avatar d-flex align-items-center">
-                <span class="text-dark mx-3">@{{ user.username }}</span>
+                <span class="text-dark mx-3">
+                    {% if user.is_participant %} 
+                        player 
+                    {% elif user.is_judge %} 
+                        judge
+                    {% elif user.is_admin %}
+                        admin
+                    {% endif %} | @{{ user.username }}</span>
                 <div class="p-image">
                     <a href="{% url 'participant_profile' %}">
                         <img src="{% static 'images/bt2.png'%}" alt="">
@@ -37,7 +44,7 @@
             {% block side_menu %}
             <div class="side-menu p-3">
                 <div class="voting-address">
-                    <form method="POST" id="addressSearchForm">
+                    <form id="addressSearchForm">
                         {% csrf_token %}
                         <div class="ads-input-wrapper d-flex my-5">
                             <input type="text" name="pollAddress" id="pollAddress" placeholder="Polling address">

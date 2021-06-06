@@ -1,0 +1,23 @@
+{% extends 'participants/dashboard.html' %}
+{% load static %}
+
+
+{% block dashboard_content %}
+<div class="main-content p-3 mt-4">
+    <div class="profile-wrapper">
+        <div class="profile-content">
+            <div class="p-image mx-auto p-image-lg animate__animated animate__zoomIn animate__faster">
+                <img src="{% static 'images/bt2.png'%}" alt="">
+            </div>
+        </div>
+        <div class="profile-text">
+            <h1 class="text-center text-muted">{{ user.username }}</h1>
+            <h1 class="text-center text-muted">{{ user.firstname }} {{ user.lastname}}</h1>
+            <h6 class="text-center text-muted">{{ user.email }}</h6>
+            <h4 class="text-center text-muted">{{ user.phone }}</h4>
+            <h5 class="text-center text-muted">{{ user.gender|lower }}</h5>
+            <h6 class="text-center text-muted">{{ usere.dob }}</h6>
+        </div>
+    </div>
+</div>
+{% endblock %}

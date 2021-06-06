@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from core.models import CustomUser
+from judges.models import JudgesPoll
 from polls.models import Polls
 
 import uuid
@@ -17,7 +18,7 @@ class Participant(models.Model):
     
 
     def __str__(self) -> str:
-        return f"participant {self.user.username}"
+        return f"participant | {self.user.username}"
     
 class ParticipantPolls(models.Model):
     id = models.UUIDField(default=uuid.uuid4, unique=True, editable=False, primary_key=True)
@@ -26,6 +27,7 @@ class ParticipantPolls(models.Model):
     participant = models.ForeignKey(Participant, on_delete=models.CASCADE)
     vote_count = models.PositiveIntegerField(default=0)
     is_uploaded = models.BooleanField(default=False)
+    judge = models.ForeignKey(JudgesPoll, on_delete=models.CASCADE, blank=True, null=True)
     timestamp = models.DateTimeField(auto_now=timezone.now)
 
     def __str__(self) -> str:

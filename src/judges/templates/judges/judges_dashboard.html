@@ -3,142 +3,148 @@
 
 
 {% block dashboard_content %}
-            <!-- main content-->
-            <div class="main-content p-3 mt-4">
-                <div class="db-banner-wrapper container">
-                    <div class="row justify-content-even align-items-center">
-                        <!-- No of participants -->
-                        <div class="col-sm-12 col-md-3">
-                            <div class="card">
-                                <div class="card-content">
-                                    <div class="d-flex align-items-center">
-                                        <div class="card-image p-4 bg-primary">
-                                            <i class="fa fa-users fa-3x text-light"></i>
-                                        </div>
-                                        <div class="card-text px-2 text-muted">
-                                            <h6">Participants</h6>
-                                                <h3 class="font-weight-bold display-5">{{ participants.count }}</h3>
-                                        </div>
-                                    </div>
-                                </div>
+<!-- main content-->
+<div class="main-content p-3 mt-4">
+    <div class="db-banner-wrapper container">
+        <div class="row justify-content-even align-items-center">
+            <!-- No of participants -->
+            <div class="col-sm-12 col-md-3">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="d-flex align-items-center">
+                            <div class="card-image p-4 bg-primary">
+                                <i class="fa fa-users fa-3x text-light"></i>
                             </div>
-                        </div>
-                        <!-- No of contestants -->
-                        <div class="col-sm-12 col-md-3">
-                            <div class="card">
-                                <div class="card-content">
-                                    <div class="d-flex align-items-center">
-                                        <div class="card-image p-4 bg-secondary">
-                                            <i class="fa fa-users fa-3x text-light"></i>
-                                        </div>
-                                        <div class="card-text px-2 text-muted">
-                                            <h6">Judges</h6>
-                                                <h3 class="font-weight-bold display-5">{{ judges.count }}</h3>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- No of contestants -->
-                        <div class="col-sm-12 col-md-3">
-                            <div class="card">
-                                <div class="card-content">
-                                    <div class="d-flex align-items-center">
-                                        <div class="card-image p-4 bg-danger">
-                                            <i class="fa fa-users fa-3x text-light"></i>
-                                        </div>
-                                        <div class="card-text px-2 text-muted">
-                                            <h6">Polls joined</h6>
-                                                <h3 class="font-weight-bold display-5">{{polls.count}}</h3>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- No of contestants -->
-                        <div class="col-sm-12 col-md-3">
-                            <div class="card">
-                                <div class="card-content">
-                                    <div class="d-flex align-items-center">
-                                        <div class="card-image p-4 bg-primary">
-                                            <i class="fa fa-users fa-3x text-light"></i>
-                                        </div>
-                                        <div class="card-text px-2 text-muted">
-                                            <h6">Participants</h6>
-                                                <h3 class="font-weight-bold display-5">4</h3>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- stats -->
-                <div class="participant-list-wrapper mt-5 pb-5 container">
-                    <div class="row justify-content-even">
-                        <!-- participants list -->
-                        <div class="col-sm-12 col-md-4">
-                            <h5 class="text-muted">Contestants</h5>
-                            <ul class="list-group participant-list">
-                                {% for users in participants %}
-                                <li class="list-group-item">
-                                    <div class="d-flex align-items-center">
-                                        <div class="p-image">
-                                            <img src="{% static 'images/bt1.png'%}" alt="">
-                                        </div>
-                                        <div class="p-text">
-                                            <span>{{ users.participant.user.username}}</span>
-                                        </div>
-                                    </div>
-                                </li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-                        <!-- Participant List -->
-                        <div class="col-sm-12 col-md-4">
-                            <h5 class="text-muted">Detail</h5>
-                            <div class="detail-wrapper">
-                                <div class="detail-content">
-                                    <div class="card p-3">
-                                        <div class="detail-image">
-                                            <div class="rounded-circle mx-auto" style="width: 50px; height: 50px;">
-                                                <img src="{% static 'images/user.svg' %}" alt="profile-skeleton" style="width: auto; height: 100%;">
-                                            </div>
-                                        </div>
-                                        <div class="detail-text">
-                                            <div class="text-wrapper">
-                                                <span><small class="text-muted">Name</small></span>
-                                                <h6>John Doe</h6>
-                                            </div>
-                                            <div class="text-wrapper">
-                                                <span><small class="text-muted">Email</small></span>
-                                                <h6>example@example.com</h6>
-                                            </div>
-                                            <div class="text-wrapper">
-                                                <span><small class="text-muted">Stack</small></span>
-                                                <h6>Fullstack</h6>
-                                            </div>
-                                            <div class="text-wrapper">
-                                                <span><small class="text-muted">Project Link</small></span>
-                                                <h6>
-                                                    <a href="https://www.google.com/" target="_blank" rel="noopener noreferrer" class="nav-link p-0">
-                                                        https://www.google.com/
-                                                    </a>
-                                                </h6>
-                                            </div>
-                                        </div>
-                                        <div class="detail-action d-flex justify-content-center mt-3">
-                                            <a href="" class="btn btn-primary" aria-disabled="true">
-                                                <i class="fa fa-thumbs-up mr-2"></i>
-                                                <span>Vote</span>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="card-text px-2 text-muted">
+                                <h6">Participants</h6>
+                                    <h3 class="font-weight-bold display-5">{{ participants.count }}</h3>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <!-- No of contestants -->
+            <div class="col-sm-12 col-md-3">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="d-flex align-items-center">
+                            <div class="card-image p-4 bg-secondary">
+                                <i class="fa fa-users fa-3x text-light"></i>
+                            </div>
+                            <div class="card-text px-2 text-muted">
+                                <h6">Judges</h6>
+                                    <h3 class="font-weight-bold display-5">{{ judges.count }}</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- No of contestants -->
+            <div class="col-sm-12 col-md-3">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="d-flex align-items-center">
+                            <div class="card-image p-4 bg-danger">
+                                <i class="fa fa-users fa-3x text-light"></i>
+                            </div>
+                            <div class="card-text px-2 text-muted">
+                                <h6">Polls joined</h6>
+                                    <h3 class="font-weight-bold display-5">{{polls.count}}</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- No of contestants -->
+            <div class="col-sm-12 col-md-3">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="d-flex align-items-center">
+                            <div class="card-image p-4 bg-primary">
+                                <i class="fa fa-users fa-3x text-light"></i>
+                            </div>
+                            <div class="card-text px-2 text-muted">
+                                <h6">Participants</h6>
+                                    <h3 class="font-weight-bold display-5">4</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- stats -->
+    <div class="participant-list-wrapper pb-5 container">
+        <div class="row justify-content-even mt-5">
+            <!-- participants list -->
+            <div class="col-sm-12 col-md-4">
+                <h5 class="text-muted">Contestants</h5>
+                <ul class="list-group participant-list">
+                    {% for users in participants %}
+                    <li class="list-group-item">
+                        <a href="" target="_blank" rel="noopener noreferrer" class="participantLink"
+                            data-id="{{ users.participant.user.id}}" data-poll="{{ poll_address }}">
+                            <div class="d-flex align-items-center">
+                                <div class="p-image">
+                                    <img src="{% static 'images/bt1.png'%}" alt="">
+                                </div>
+                                <div class="p-text">
+                                    <span>{{ users.participant.user.username}}</span>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <!-- Participant Detail -->
+            <div class="col-sm-12 col-md-4">
+                <h5 class="text-muted">Detail</h5>
+                <div class="detail-wrapper">
+                    <div class="detail-content">
+                        <div class="card p-3">
+                            <div class="detail-image">
+                                <div class="rounded-circle mx-auto" style="width: 50px; height: 50px;">
+                                    <img src="{% static 'images/user.svg' %}" alt="profile-skeleton"
+                                        style="width: auto; height: 100%;">
+                                </div>
+                            </div>
+                            <div class="detail-text">
+                                <div class="text-wrapper">
+                                    <span><small class="text-muted">Name</small></span>
+                                    <h6 id="participantName">John Doe</h6>
+                                </div>
+                                <div class="text-wrapper">
+                                    <span><small class="text-muted">Email</small></span>
+                                    <h6 id="participantEmail">example@example.com</h6>
+                                </div>
+                                <div class="text-wrapper">
+                                    <span><small class="text-muted">Stack</small></span>
+                                    <h6 id="participantStack">coder</h6>
+                                </div>
+                                <div class="text-wrapper">
+                                    <span><small class="text-muted">Project
+                                            Link</small></span>
+                                    <h6>
+                                        <a href="" target="_blank" rel="noopener noreferrer"
+                                            class="nav-link p-0" id="participantProjectLink">
+                                            https://www.google.com/
+                                    </a>
+                                    </h6>
+                                </div>
+                            </div>
+                            <div class="detail-action d-flex justify-content-center mt-3">
+                                <a href="" class="btn btn-primary" aria-disabled="true">
+                                    <i class="fa fa-thumbs-up mr-2"></i>
+                                    <span>Vote</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
