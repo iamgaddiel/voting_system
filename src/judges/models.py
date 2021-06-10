@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from core.models import CustomUser
+from participants.models import ParticipantPolls
 from polls.models import Polls
 import uuid
 
@@ -24,8 +25,9 @@ class JudgeProfile(models.Model):
 class JudgesPoll(models.Model):
     id = models.UUIDField(default=uuid.uuid4, unique=True, editable=False, primary_key=True)
     polls = models.ForeignKey(Polls, on_delete=models.CASCADE)
-    project_link = models.CharField(max_length=100, blank=True, default='')
     judge = models.ForeignKey(JudgeProfile, on_delete=models.CASCADE)
+    voted_participant = models.OneToOneField(ParticipantPolls, on_delete=models.CASCADE, null=True)
+    rating = models.PositiveIntegerField(default=1)
     timestamp = models.DateTimeField(auto_now=timezone.now)
 
     def __str__(self) -> str:

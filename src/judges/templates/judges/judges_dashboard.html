@@ -124,25 +124,59 @@
                                     <h6 id="participantStack">coder</h6>
                                 </div>
                                 <div class="text-wrapper">
-                                    <span><small class="text-muted">Project
-                                            Link</small></span>
+                                    <span><small class="text-muted">Project Link</small></span>
                                     <h6>
-                                        <a href="" target="_blank" rel="noopener noreferrer"
-                                            class="nav-link p-0" id="participantProjectLink">
-                                            https://www.google.com/
-                                    </a>
+                                        <a href="" target="_blank" rel="noopener noreferrer" class="nav-link p-0"
+                                            id="participantProjectLink">
+                                            https://www.example.com/
+                                        </a>
                                     </h6>
                                 </div>
-                            </div>
-                            <div class="detail-action d-flex justify-content-center mt-3">
-                                <a href="" class="btn btn-primary" aria-disabled="true">
-                                    <i class="fa fa-thumbs-up mr-2"></i>
-                                    <span>Vote</span>
-                                </a>
+                                <form method="post" id="voteForm">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="pollAddress" value="{{ poll_address }}">
+                                    <input type="hidden" name="participantId" value="" id="vp-id">
+                                    <input type="hidden" name="judgeStatus" value="{{ judge_status }}">
+                                    <div class="input-group mt-4">
+                                        <label for="scoreValue" class="text-primary">
+                                            Rating: <span id="ratingValueLabel" class="text-dark font-weight-bold">1</span>
+                                        </label>
+                                        <input type="range" name="rating" id="ratingValue" min="1" max="10"
+                                            step="1" class="form-control-range w-100 mx-auto ">
+                                    </div>
+                                    <div class="detail-action d-flex justify-content-center mt-3">
+                                        <button class="btn btn-primary" aria-disabled="true" id="voteBtn">
+                                            <i class="fa fa-thumbs-up"></i></i>
+                                            <span>Vote</span>
+                                        </button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- score board -->
+    <div class="mt-5">
+        <div class="card p-4">
+            <h5 class="text-muted mot-3">score board</h5>
+
+            <div class="score-list">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">lorem ipsum</li>
+                    <li class="list-group-item">lorem ipsum</li>
+                    <li class="list-group-item">lorem ipsum</li>
+                    <li class="list-group-item">lorem ipsum</li>
+                    <li class="list-group-item">lorem ipsum</li>
+                    <li class="list-group-item">lorem ipsum</li>
+                    <li class="list-group-item">lorem ipsum</li>
+                    <li class="list-group-item">lorem ipsum</li>
+                    <li class="list-group-item">lorem ipsum</li>
+                    <li class="list-group-item">lorem ipsum</li>
+                </ul>
             </div>
         </div>
     </div>
