@@ -2,10 +2,10 @@ from typing import Any, Dict
 from django.contrib.auth.models import User
 from django.http.response import HttpResponse
 from django.urls import reverse_lazy
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import TemplateView, CreateView, View
 from django.contrib.auth.mixins import LoginRequiredMixin
-from judges.views import JudgesDashboard
+from judges.models import JudgeProfile
 
 from participants.models import Participant
 from .models import CustomUser
@@ -20,12 +20,13 @@ class AdminDashboard(LoginRequiredMixin, TemplateView):
 
 class Dispacther(View):
     def get(self, *args, **kwargs):
-        logged_user = self.request.user
+        user = get_object_or_404(CustomUser, id=self.request.user.id)
+        print(user.is_participant, user.is_judge)
         url = ""
-        if logged_user.is_participant:
+        if user.is_participant:
             url = "participant_dashboard"
-        if logged_user.is_judge:
-            url = "judges_dashboard"
+        if user.is_judge:
+            url = "judges_dashboard"        
         return redirect(url)
 
 class Regisration(CreateView):
@@ -44,10 +45,11 @@ class Regisration(CreateView):
             Participant.objects.create(user=user)
             
         if account_type == "judge":
-            form.instance.is_judge = True
+            form.instance.is_participant = True
             form.save()
             user = CustomUser.objects.get(username=username)
-            JudgesDashboard.objects.create(user=user)
+            form.instance.is_judge = True
+            JudgeProfile.objects.create(user=user)
 
         return redirect('login')
     

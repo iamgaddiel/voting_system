@@ -26,7 +26,7 @@ class JudgesPoll(models.Model):
     id = models.UUIDField(default=uuid.uuid4, unique=True, editable=False, primary_key=True)
     polls = models.ForeignKey(Polls, on_delete=models.CASCADE)
     judge = models.ForeignKey(JudgeProfile, on_delete=models.CASCADE)
-    voted_participant = models.OneToOneField(ParticipantPolls, on_delete=models.CASCADE, null=True)
+    voted_participant = models.ForeignKey(ParticipantPolls, on_delete=models.CASCADE, null=True)
     rating = models.PositiveIntegerField(default=1)
     timestamp = models.DateTimeField(auto_now=timezone.now)
 

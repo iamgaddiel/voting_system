@@ -49,13 +49,13 @@ $(() => {
         const { data } = await fetchData(endPoint);
         const fullName = `${data.first_name} ${data.last_name}`;
 
-        console.log(endPoint)
         // display voted on the voted participant
         if (data.voted && data.voted_participant) {
             $('#voteBtn')
                 .attr({ 'disabled': true, 'class': 'btn btn-secondary' })
                 .html('<i class="fas fa-thumbs-up"></i> you\'ve voted')
                 .css({ 'display': 'block' })
+            $('#rating-wrapper').css({'display': 'none'})
         }
         // else {
         //     $('#voteBtn').css({ 'display': 'none' })
@@ -76,7 +76,6 @@ $(() => {
         const voteBtn = $('#voteBtn');
         $('#voteForm').serializeArray().map(field => formData[field.name] = field.value);
         try {
-            console.log(formData)
             let response = await submitForm(endPoint, formData);
             alert(response.data)
         } catch (err) {
