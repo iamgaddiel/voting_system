@@ -3,87 +3,92 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<header>
-    <div class="header-content">
-        <div class="d-flex justify-content-between align-items-center pl-4 pr-4">
-            <div class="menu-btn-container">
-                <button class="menu-btn"><i class="fa fa-bars"></i></button>
-            </div>
-            <div class="header-controls">
-                {% if user.is_participant %}
-                <a href="{% url 'participant_dashboard' %}" class="text-muted"><i class="fa fa-home"></i></a>
-                <a href="{% url 'participant_profile' %}" class="text-primary mx-3"><i class="fa fa-user"></i></a>
-                {% elif user.is_judge %}
-                <a href="{% url 'judges_dashboard' %}" class="text-muted"><i class="fa fa-home"></i></a>
-                <a href="{% url 'participant_profile' %}" class="text-primary mx-3"><i class="fa fa-user"></i></a>
-                {% endif %}
-                <a href="" class="text-success ml-3"><i class="fa fa-bar-chart" aria-hidden="true"></i></a>
-                <a href="{% url 'logout' %}" class="text-danger ml-3"><i class="fa fa-sign-out-alt"></i></a>
-            </div>
-            <div class="avatar d-flex align-items-center">
-                <span class="text-dark mx-3">
-                    {% if user.is_participant %} 
-                        player 
-                    {% elif user.is_judge %} 
-                        judge
-                    {% elif user.is_admin %}
-                        admin
-                    {% endif %} | @{{ user.username }}</span>
-                <div class="p-image">
-                    <a href="{% url 'participant_profile' %}">
-                        <img src="{% static 'images/bt2.png'%}" alt="">
-                    </a>
+<div id="mySidenav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    {% block side_menu %}
+    <div class="side-menu p-3">
+        <div class="voting-address">
+            <form id="addressSearchForm">
+                {% csrf_token %}
+                <div class="ads-input-wrapper d-flex my-5">
+                    <input type="text" name="pollAddress" id="pollAddress" placeholder="Polling address">
+                    <input type="hidden" name="account_type" value="{{ account_type }}">
+                    <button type="submit" id="join-btn" class="bg-primary">
+                        join
+                    </button>
                 </div>
-            </div>
+            </form>
         </div>
-    </div>d
-</header>
-<main>
-    <div class="main-wrapper">
-        <div class="d-flex">
-            {% block side_menu %}
-            <div class="side-menu p-3">
-                <div class="voting-address">
-                    <form id="addressSearchForm">
-                        {% csrf_token %}
-                        <div class="ads-input-wrapper d-flex my-5">
-                            <input type="text" name="pollAddress" id="pollAddress" placeholder="Polling address">
-                            <input type="hidden" name="account_type" value="{{ account_type }}">
-                            <button type="submit" id="join-btn" class="bg-primary">
-                                join
-                            </button>
-                        </div>
-                    </form>
-                </div>
-                <div class="address-list">
-                    <ul class="list-group">
-                        {% for poll in polls %}
-                        <li class="list-group-item">
-                            {% if user.is_participant %}
-                            <a href="{% url 'participant_poll' poll.polls.address %}" class="nav-link p-0">
-                                <small>{{ poll.polls.title }}</small>
-                            </a>
-                            {%  elif user.is_judge %}
-                            <a href="{% url 'judges_poll_dashboard' poll.polls.address %}" class="nav-link p-0">
-                                <small>{{ poll.polls.title }}</small>
-                            </a>
-                            {% endif %}
-                        </li>
-                        {% empty %}
-                        <li class="list-group-item"><small>You've not joined any polls yet</small></li>
-                        {% endfor %}
-                    </ul>
-                </div>
-
-            </div>
-            {% endblock %}
-            {% block dashboard_content %}
-            <!-- main content-->
-            <div class="main-content p-3 mt-4">
-                <h1>Welcome to your dashboard</h1>
-            </div>
-            {% endblock %}
+        <div class="address-list">
+            <ul class="list-group">
+                {% for poll in polls %}
+                <li class="list-group-item">
+                    {% if user.is_participant %}
+                    <a href="{% url 'participant_poll' poll.polls.address %}" class="nav-link p-0">
+                        <small>{{ poll.polls.title }}</small>
+                    </a>
+                    {%  elif user.is_judge %}
+                    <a href="{% url 'judges_poll_dashboard' poll.polls.address %}" class="nav-link p-0">
+                        <small>{{ poll.polls.title }}</small>
+                    </a>
+                    {% endif %}
+                </li>
+                {% empty %}
+                <li class="list-group-item"><small>You've not joined any polls yet</small></li>
+                {% endfor %}
+            </ul>
         </div>
     </div>
-</main>
+    {% endblock %}
+</div>
+
+<div id="main">
+    <header>
+        <div class="header-content">
+            <div class="d-flex justify-content-between align-items-center pl-4 pr-4">
+                <div class="menu-btn-container">
+                    <button class="menu-btn" onclick="openNav()"><i class="fa fa-bars"></i></button>
+                </div>
+                <div class="header-controls">
+                    {% if user.is_participant %}
+                    <a href="{% url 'participant_dashboard' %}" class="text-muted"><i class="fa fa-home"></i></a>
+                    <a href="{% url 'participant_profile' %}" class="text-primary mx-3"><i class="fa fa-user"></i></a>
+                    {% elif user.is_judge %}
+                    <a href="{% url 'judges_dashboard' %}" class="text-muted"><i class="fa fa-home"></i></a>
+                    <a href="{% url 'participant_profile' %}" class="text-primary mx-3"><i class="fa fa-user"></i></a>
+                    {% endif %}
+                    <a href="" class="text-success ml-3"><i class="fa fa-bar-chart" aria-hidden="true"></i></a>
+                    <a href="{% url 'logout' %}" class="text-danger ml-3"><i class="fa fa-sign-out-alt"></i></a>
+                </div>
+                <div class="avatar d-flex align-items-center">
+                    <span class="text-dark mx-3">
+                        {% if user.is_participant %}
+                        player
+                        {% elif user.is_judge %}
+                        judge
+                        {% elif user.is_admin %}
+                        admin
+                        {% endif %} | @{{ user.username }}</span>
+                    <div class="p-image">
+                        <a href="{% url 'participant_profile' %}">
+                            <img src="{% static 'images/bt2.png'%}" alt="">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>d
+    </header>
+    <main>
+        <div class="main-wrapper">
+            <div class="d-flex">
+                {% block dashboard_content %}
+                <!-- main content-->
+                <div class="main-content p-3 mt-4">
+                    <h1>Welcome to your dashboard</h1>
+                </div>
+                {% endblock %}
+            </div>
+        </div>
+    </main>
+</div>
 {% endblock %}

@@ -95,8 +95,8 @@ $(() => {
     $('#ratingValue').on('input', displayVoteRating)
 
     // update participant ranking
-    setInterval(getCurrentRanking, 3000)
-    // getCurrentRanking();
+    // setInterval(getCurrentRanking, 3000)
+    getCurrentRanking();
 
     // ====================================== [ Functions ] =========================================
 

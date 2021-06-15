@@ -119,16 +119,8 @@ body{
     background: none;
 }
 .main-wrapper{
-    overflow-y: auto;
-    height: 95vh;
     padding-top: 2rem;
     background: var(--lighter-grey);
-}
-.side-menu{
-    width: 20%;
-    height: 100vh;
-    background: var(--white);
-    position: relative;
 }
 .ads-input-wrapper{
     box-shadow: 1px 1px 3px var(--light-grey);

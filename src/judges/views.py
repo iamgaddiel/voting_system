@@ -32,23 +32,21 @@ class JudgePollDashboard(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        # get poll address from url parameter
-        poll_address = self.kwargs.get('poll_address')
-        current_poll = get_object_or_404(
-            Polls, address=poll_address
-        ) 
-        judge_profile = JudgeProfile.objects.get(user=self.request.user)  # get judge profile instance
-        # get all participants in the same poll as the judge
-        all_participants = ParticipantPolls.objects.filter(polls=current_poll)
-        all_judges = JudgesPoll.objects.filter(
-            polls=current_poll)  # get all judges for a single poll
+        
+        poll_address = self.kwargs.get('poll_address') # get poll address from url parameter
+        current_poll = get_object_or_404(Polls, address=poll_address) 
+        judge_profile = JudgeProfile.objects.get(user=self.request.user)
+        all_poll_participants = ParticipantPolls.objects.filter(polls=current_poll)
+        all_poll_judges = JudgesPoll.objects.filter(polls=current_poll)
+        is_voted = JudgesPoll.objects.get(polls=current_poll, judge=judge_profile).is_voted
 
-        context['participants'] = all_participants
+        context['participants'] = all_poll_participants
         context['polls'] = JudgesPoll.objects.filter(judge=judge_profile)  # get all the polls joined by a judge
         context['poll_address'] = poll_address
-        context['judges'] = all_judges
+        context['judges'] = all_poll_judges
         context['account_type'] = 'judge'
         context['judge_status'] = self.request.user.is_judge
+        context['is_voted'] = is_voted
         return context
 
 

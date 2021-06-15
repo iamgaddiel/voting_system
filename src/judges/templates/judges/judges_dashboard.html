@@ -137,12 +137,14 @@
                                     <input type="hidden" name="pollAddress" value="{{ poll_address }}">
                                     <input type="hidden" name="participantId" value="" id="vp-id">
                                     <input type="hidden" name="judgeStatus" value="{{ judge_status }}">
+                                    {% if not is_voted %}
                                     <div class="input-group mt-4" id="rating-wrapper">
                                         <label for="scoreValue" class="text-primary">
-                                            Rating: <span id="ratingValueLabel" class="text-dark font-weight-bold">1</span>
+                                            Rating: <span id="ratingValueLabel"
+                                                class="text-dark font-weight-bold">1</span>
                                         </label>
-                                        <input type="range" name="rating" id="ratingValue" min="1" max="10"
-                                            step="1" class="form-control-range w-100 mx-auto ">
+                                        <input type="range" name="rating" id="ratingValue" min="1" max="10" step="1"
+                                            class="form-control-range w-100 mx-auto ">
                                     </div>
                                     <div class="detail-action d-flex justify-content-center mt-3">
                                         <button class="btn btn-primary" aria-disabled="true" id="voteBtn">
@@ -150,6 +152,7 @@
                                             <span>Vote</span>
                                         </button>
                                     </div>
+                                    {% endif %}
                                 </form>
                             </div>
                         </div>
@@ -165,9 +168,8 @@
             <h5 class="text-muted mot-3">score board</h5>
 
             <div class="score-list">
-                <ul class="list-group list-group-flush" id="scoreBoard">
-                    
-                </ul>
+                <!-- !dynamically filled async -->
+                <ul class="list-group list-group-flush" id="scoreBoard"></ul>
             </div>
         </div>
     </div>
