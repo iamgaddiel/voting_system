@@ -1,5 +1,6 @@
 import json
 from typing import Any, Dict, Optional
+from django.db import models
 from django.http import response
 from django.http.response import JsonResponse
 from django.shortcuts import get_object_or_404, render
@@ -35,17 +36,15 @@ class JudgePollDashboard(LoginRequiredMixin, TemplateView):
         poll_address = self.kwargs.get('poll_address')
         current_poll = get_object_or_404(
             Polls, address=poll_address
-        )  # get poll using it's address
-        judge_profile = JudgeProfile.objects.get(
-            user=self.request.user)  # get judge profile instance
+        ) 
+        judge_profile = JudgeProfile.objects.get(user=self.request.user)  # get judge profile instance
         # get all participants in the same poll as the judge
         all_participants = ParticipantPolls.objects.filter(polls=current_poll)
         all_judges = JudgesPoll.objects.filter(
             polls=current_poll)  # get all judges for a single poll
 
         context['participants'] = all_participants
-        context['polls'] = JudgesPoll.objects.filter(
-            judge=judge_profile)  # get all the polls joined by a judge
+        context['polls'] = JudgesPoll.objects.filter(judge=judge_profile)  # get all the polls joined by a judge
         context['poll_address'] = poll_address
         context['judges'] = all_judges
         context['account_type'] = 'judge'
@@ -77,8 +76,7 @@ class GetParticipantDetail(LoginRequiredMixin, UserPassesTestMixin, View):
         # get a participant with a user id
         get_participant = get_object_or_404(
             Participant, user=CustomUser.objects.get(id=kwargs.get('id')))
-        poll = get_object_or_404(Polls, address=kwargs.get(
-            'poll_address'))  # get a single poll
+        poll = get_object_or_404(Polls, address=kwargs.get('poll_address'))  # get a single poll
         participant_poll = get_object_or_404(  # get a participant poll
             ParticipantPolls,
             polls=poll,
@@ -121,24 +119,27 @@ class VoteParticipant(LoginRequiredMixin, UserPassesTestMixin, View):
         _, poll_address, participant_id, judge_status, rating = json.loads(
             request.body.decode('utf-8')).values()
         judge_profile = JudgeProfile.objects.get(user=request.user.id)
-        particpant_poll = ParticipantPolls.objects.get(
+        participant_poll = ParticipantPolls.objects.get(
             participant=participant_id)
         try:
             # check if judge has voted for a participant
             participant_poll = JudgesPoll.objects.get(
                 polls=Polls.objects.get(address=poll_address),
-                voted_participant=particpant_poll,
+                voted_participant=participant_poll,
                 judge=judge_profile
             )
             if participant_poll is not None:
                 return JsonResponse({'error': "you've voted"})
 
         except JudgesPoll.DoesNotExist:
-            particpant_poll.vote_count += 1
-            particpant_poll.save()
+            participant_poll.vote_count += 1
+            participant_poll.total_rating += rating
+            participant_poll.number_of_votes += 1
+            participant_poll.save()
             judge_poll = JudgesPoll.objects.get(judge=judge_profile)
             judge_poll.rating = rating
-            judge_poll.voted_participant = particpant_poll
+            judge_poll.voted_participant = participant_poll
+            judge_poll.is_voted = True
             judge_poll.save()
 
         return JsonResponse({'data': 'voted'})
@@ -149,3 +150,37 @@ class VoteParticipant(LoginRequiredMixin, UserPassesTestMixin, View):
         if user_is_judge:
             return True
         return False
+
+
+class GetRanking(LoginRequiredMixin, UserPassesTestMixin, View):
+    def get(self, request, *args, **kwargs):
+        try:
+            poll_address = kwargs.get('address')
+            poll = Polls.objects.get(address=poll_address)
+            poll_judges = JudgesPoll.objects.filter(polls=poll)
+            all_poll_participants = ParticipantPolls.objects.filter(polls=poll).order_by('-total_rating')
+            polls_detail: list = [] # rating detail
+            
+            for participant_poll in all_poll_participants:
+                for judge in poll_judges:
+                    if judge.voted_participant == participant_poll:
+                        rating_details: dict = {
+                            'username' : participant_poll.participant.user.username,
+                            'first_name': participant_poll.participant.user.first_name,
+                            'last_name': participant_poll.participant.user.last_name,
+                            'average_rating': participant_poll.get_avarage_rating()
+                        }
+                        polls_detail.append(rating_details)
+            
+            return JsonResponse({
+                'data': {
+                    'poll_details': polls_detail
+                }
+            })
+        except ZeroDivisionError as zd_err:
+            return JsonResponse({'error': str(zd_err)}, safe=False, status=403)
+
+    def test_func(self) -> Optional[bool]:
+        if not self.request.user.is_judge:
+            return False
+        return True

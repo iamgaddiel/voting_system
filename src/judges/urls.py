@@ -5,6 +5,7 @@ from .views import (
     JudgePollDashboard,
     JudgesDashboardIndex,
     VoteParticipant,
+    GetRanking
 )
 
 
@@ -14,4 +15,5 @@ urlpatterns = [
     path('join/poll/', JoinPoll.as_view(), name='judges_join_poll'),
     path('get/participant/detail/<id>/<poll_address>/', GetParticipantDetail.as_view(), name="judge_participant_detail"),
     path('vote/participant/', VoteParticipant.as_view(), name="judge__vote_participant"),
+    path('get/participant/rankings/<address>/', GetRanking.as_view(), name="judge__rating"),
 ]

@@ -26,7 +26,18 @@ class ParticipantPolls(models.Model):
     participant = models.ForeignKey(Participant, on_delete=models.CASCADE)
     vote_count = models.PositiveIntegerField(default=0)
     is_uploaded = models.BooleanField(default=False)
+    total_rating = models.PositiveIntegerField(default=0, blank=True, help_text="total nuber of rating")
     timestamp = models.DateTimeField(auto_now=timezone.now)
 
     def __str__(self) -> str:
-        return '{0}'.format(self.participant.user.username)
+        return '{0} | total rating: {1}'.format(
+            self.participant.user.username,
+            self.total_rating
+        )
+    
+    def get_avarage_rating(self):
+        avarage = 0 if self.vote_count == 0 else self.total_rating / self.vote_count
+        return avarage
+
+    class Meta:
+        ordering = ['-total_rating']

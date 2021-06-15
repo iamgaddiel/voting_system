@@ -28,7 +28,11 @@ class JudgesPoll(models.Model):
     judge = models.ForeignKey(JudgeProfile, on_delete=models.CASCADE)
     voted_participant = models.ForeignKey(ParticipantPolls, on_delete=models.CASCADE, null=True)
     rating = models.PositiveIntegerField(default=1)
+    is_voted = models.BooleanField(default=False)
     timestamp = models.DateTimeField(auto_now=timezone.now)
 
     def __str__(self) -> str:
-        return '{0}'.format(self.judge.user.username)
+        return '{0} | voted: {1}'.format(
+            self.judge.user.username,
+            self.is_voted
+        )

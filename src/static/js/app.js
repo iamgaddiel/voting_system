@@ -50,16 +50,17 @@ $(() => {
         const fullName = `${data.first_name} ${data.last_name}`;
 
         // display voted on the voted participant
-        if (data.voted && data.voted_participant) {
+        if (data.voted) {
             $('#voteBtn')
                 .attr({ 'disabled': true, 'class': 'btn btn-secondary' })
                 .html('<i class="fas fa-thumbs-up"></i> you\'ve voted')
                 .css({ 'display': 'block' })
-            $('#rating-wrapper').css({'display': 'none'})
+            $('#rating-wrapper').css({ 'display': 'none' })
         }
-        // else {
-        //     $('#voteBtn').css({ 'display': 'none' })
-        // }
+        else {
+            $('#rating-wrapper').css({ 'display': 'none' })
+            $('#voteBtn').css({ 'display': 'none' })
+        }
         $('#participantName').html(fullName);
         $('#participantEmail').html(data.email);
         $('#participantStack').html(data.stack);
@@ -86,14 +87,60 @@ $(() => {
             .html('<i class="fas fa-thumbs-up"></i> you\'ve voted')
     })
 
+    // update ranking
+
 
     // update score value label
-    $('#ratingValue').on('change', displayVoteRating) 
-    $('#ratingValue').on('input', displayVoteRating) 
+    $('#ratingValue').on('change', displayVoteRating)
+    $('#ratingValue').on('input', displayVoteRating)
 
-// ====================================== [ Functions ] =========================================
+    // update participant ranking
+    setInterval(getCurrentRanking, 3000)
+    // getCurrentRanking();
+
+    // ====================================== [ Functions ] =========================================
+
+    async function getCurrentRanking() {
+        try {
+            const pollAddress = location.pathname.split('/')[5]
+            const endPoint = `${baseUrl}judges/en/get/participant/rankings/${[pollAddress]}/`
+            const { data, error } = await fetchData(endPoint)
+
+            if (!data) {
+                console.error(error)
+            } else {
+                console.log(data.poll_details)
+                let scores = ''
+
+                data.poll_details.map((
+                    { 
+                        first_name, 
+                        last_name,
+                        username,
+                        average_rating
+                    }, index) => {
+                    scores += `<li class="list-group-item">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <span>${index+=1} |</span>
+                            <b class="ml-5" style="margin-left: 5px;">${first_name} ${last_name} | ${username}</b>
+                        </div>
+                        <div>
+                            <span>position: ${average_rating}</span>
+                        </div>
+                    </div>
+                </li>`
+                })
+                $('#scoreBoard').html(scores)
+            }
+        }
+        catch (err) {
+            console.error(err)
+        }
+    }
+
     // update score value label
-    function displayVoteRating(){
+    function displayVoteRating() {
         $('#ratingValueLabel').html(this.value)
     }
 
