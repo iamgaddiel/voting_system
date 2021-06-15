@@ -179,6 +179,10 @@ class GetRanking(LoginRequiredMixin, UserPassesTestMixin, View):
             return JsonResponse({'error': str(zd_err)}, safe=False, status=403)
 
     def test_func(self) -> Optional[bool]:
-        if not self.request.user.is_judge:
+        user = self.request.user
+        if user.is_anonymous:
             return False
+        else:
+            if (not user.is_participant) and (not user.is_judge):
+                return False
         return True

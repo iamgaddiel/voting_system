@@ -112,7 +112,7 @@ $(() => {
             const pollAddress = location.pathname.split('/')[5]
             const endPoint = `${baseUrl}judges/en/get/participant/rankings/${[pollAddress]}/`
             const { data, error } = await fetchData(endPoint)
-
+            
             if (!data) {
                 console.error(error)
             } else {
@@ -133,7 +133,9 @@ $(() => {
                             <b class="ml-5" style="margin-left: 5px;">${first_name} ${last_name} | ${username}</b>
                         </div>
                         <div>
-                            <span>${average_rating}</span>
+                            <small>
+                                <span>${average_rating}</span>
+                            </small>
                         </div>
                     </div>
                 </li>`
