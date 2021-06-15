@@ -1,0 +1,25 @@
+{% load static %}
+<div class="profile-preview p-4 animate__animated animate__fadeIn animated__fast">
+    <div class="profile-image rounded-circle">
+        <img src="{% static 'images/bt2.png'%}" alt="profile-image">
+    </div>
+    <div class="profile-detail mt-4">
+        <h6 class="text-center">{{ user.first_name }} {{ user.last_name }}</h6>
+        <p class="text-center text-muted mb-0">{{ user.email }}</p>
+        <p class="text-center text-muted m-0">
+            <b>
+                <small>@{{ user.username }}</small>
+            </b>
+        </p>
+        <p class="text-center text-muted">
+            {% if user.is_judge %}
+            Judge
+            {% elif user.is_participant %}
+            Participant
+            {% endif %}
+        </p>
+    </div>
+    <div class="update-profile mt-5 mx-auto w-50">
+        <a href="">update profile</a>
+    </div>
+</div>

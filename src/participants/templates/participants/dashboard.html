@@ -4,7 +4,7 @@
 
 {% block content %}
 <div id="mySidenav" class="sidenav">
-    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <a href="javascript:void(0)" class="closebtn nav-link" onclick="closeNav()">&times;</a>
     {% block side_menu %}
     <div class="side-menu p-3">
         <div class="voting-address">
@@ -27,7 +27,7 @@
                     <a href="{% url 'participant_poll' poll.polls.address %}" class="nav-link p-0">
                         <small>{{ poll.polls.title }}</small>
                     </a>
-                    {%  elif user.is_judge %}
+                    {% elif user.is_judge %}
                     <a href="{% url 'judges_poll_dashboard' poll.polls.address %}" class="nav-link p-0">
                         <small>{{ poll.polls.title }}</small>
                     </a>
@@ -60,23 +60,21 @@
                     <a href="" class="text-success ml-3"><i class="fa fa-bar-chart" aria-hidden="true"></i></a>
                     <a href="{% url 'logout' %}" class="text-danger ml-3"><i class="fa fa-sign-out-alt"></i></a>
                 </div>
-                <div class="avatar d-flex align-items-center">
-                    <span class="text-dark mx-3">
-                        {% if user.is_participant %}
-                        player
-                        {% elif user.is_judge %}
-                        judge
-                        {% elif user.is_admin %}
-                        admin
-                        {% endif %} | @{{ user.username }}</span>
-                    <div class="p-image">
-                        <a href="{% url 'participant_profile' %}">
-                            <img src="{% static 'images/bt2.png'%}" alt="">
-                        </a>
-                    </div>
+                <div class="avatar d-flex align-items-center profile_btn ">
+                    <button class="d-flex align-items-center justify-content-center" id="toggleProfile" data-toggle="false">
+                        <span class="text-dark mx-3"> @{{ user.username }}</span>
+                        <div class="p-image">
+                            <a href="{% url 'participant_profile' %}">
+                                <img src="{% static 'images/bt2.png'%}" alt="">
+                            </a>
+                        </div>
+                    </button>
                 </div>
             </div>
-        </div>d
+            
+            <!-- profile preview -->
+            {% include 'core/includes/profile_preview.html' %}
+        </div>
     </header>
     <main>
         <div class="main-wrapper">

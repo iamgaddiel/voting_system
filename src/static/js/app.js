@@ -94,9 +94,16 @@ $(() => {
     $('#ratingValue').on('change', displayVoteRating)
     $('#ratingValue').on('input', displayVoteRating)
 
-    // update participant ranking
+// update participant ranking
     // setInterval(getCurrentRanking, 3000)
     getCurrentRanking();
+
+    // toggle show profile preview
+    // $('#toggleProfile').on('click', togglePreviewProfile)
+    $('#toggleProfile').click((event) => {
+        event.preventDefault()
+        $('.profile-preview').toggle(100)
+    })
 
     // ====================================== [ Functions ] =========================================
 
@@ -126,7 +133,7 @@ $(() => {
                             <b class="ml-5" style="margin-left: 5px;">${first_name} ${last_name} | ${username}</b>
                         </div>
                         <div>
-                            <span>position: ${average_rating}</span>
+                            <span>${average_rating}</span>
                         </div>
                     </div>
                 </li>`

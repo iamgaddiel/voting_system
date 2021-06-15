@@ -105,21 +105,73 @@ body{
 
 
 /* Dashboard */
+header{
+    position: fixed;
+    width: 100%;
+    z-index: 999;
+}
 .header-content{
     background: var(--white);
     box-shadow: 1px 1px 10px var(--light-grey);
     padding: 14px 10px;
-    position: fixed;
     top: 0;
     width: 100%;
-    z-index: 999;
+    position: relative;
 }
 .header-content button.menu-btn{
     border: none;
     background: none;
 }
+/* profile preview */
+.profile_btn{
+    box-shadow: 1px 2px 1px var(--light-grey);
+    padding: 5px;
+    border-radius: 25px;
+}
+.profile_btn button{
+    border: none;
+    background: none;
+    padding: 0;
+}
+.profile-preview{
+    position: absolute;
+    width: 300px;
+    background: var(--white);
+    right: 20px;
+    top: 70px;
+    z-index: 99999;
+    box-shadow: 1px 2px 1px var(--light-grey), -1px -2px 1px var(--light-grey);
+    border-radius: 10px;
+    display: none;
+}
+.profile-preview .profile-image{
+    width: 70px;
+    height: 70px;
+    margin: auto;
+}
+.profile-preview .profile-image img{
+    width: 100%;
+    height: auto;
+}
+.profile-preview .update-profile a{
+    border: 1px solid var(--grey);
+    padding: 7px;
+    border-radius: 100px;
+    margin: auto;
+    width: 100px;
+    text-decoration: none;
+    color: var(--dark);
+    transition: background .5s;
+}
+.profile-preview .update-profile a:hover{
+    background: var(--grey);
+    color: var(--white);
+}
+
+
+/* main content */
 .main-wrapper{
-    padding-top: 2rem;
+    padding-top: 5rem;
     background: var(--lighter-grey);
 }
 .ads-input-wrapper{

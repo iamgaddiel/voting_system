@@ -83,7 +83,7 @@
                 <ul class="list-group participant-list">
                     {% for users in participants %}
                     <li class="list-group-item">
-                        <a href="" target="_blank" rel="noopener noreferrer" class="participantLink"
+                        <a href="" target="_blank" rel="noopener noreferrer" class="participantLink nav-link p-0"
                             data-id="{{ users.participant.user.id}}" data-poll="{{ poll_address }}">
                             <div class="d-flex align-items-center">
                                 <div class="p-image">
@@ -162,16 +162,7 @@
         </div>
     </div>
 
-    <!-- score board -->
-    <div class="mt-5">
-        <div class="card p-4">
-            <h5 class="text-muted mot-3">score board</h5>
-
-            <div class="score-list">
-                <!-- !dynamically filled async -->
-                <ul class="list-group list-group-flush" id="scoreBoard"></ul>
-            </div>
-        </div>
-    </div>
+    <!-- scoreboard -->
+    {% include 'core/includes/scoreboard.html' %}
 </div>
 {% endblock %}
