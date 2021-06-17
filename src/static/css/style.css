@@ -198,7 +198,7 @@ header{
 }
 
 .participant-list{
-    height: 50vh;
+    height: 30vh;
     overflow-y: auto;
 }
 .p-image{
