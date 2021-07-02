@@ -1,0 +1,73 @@
+{% extends 'admin/dashboard.html' %}
+
+{% block admin_dashboard %}
+    <section class="title">
+        <h1 class="text-primary text-center h1 mb-4 text-uppercase">Polls</h1>
+    </section>
+    <section class="poll-panel mt2 d-flex justify-content-evenly">
+        <a href="{% url 'admin_polls_delete' %}" class="nav-link p-0 text-danger font-weight-bold" id="deleteAllBtn">
+            <i class="fa fa-trash"></i> delete all
+        </a>
+        <a href="{% url 'admin_polls_create' %}" class="nav-link p-0 font-weight-bold">
+            <i class="fa fa-plus"></i> add poll
+        </a>
+    </section>
+    <section class="list-wrapper mt-3">
+        <div class="list-content">
+            <div class="card">
+                <div class="card-body">
+
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class="text-light">
+                                <tr>
+                                    <th>s/n</th>
+                                    <th>title</th>
+                                    <th>address</th>
+                                    <!-- <th>start</th>
+                                    <th>end</th> -->
+                                    <th>view</th>
+                                    <th>delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for poll in polls %}
+                                    <tr>
+                                        <td>
+                                            <span class="text-primary">
+                                                {{ forloop.counter }}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'admin_polls_detail' poll.pk %}" class="nav-link p-0">
+                                                {{ poll.title }}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <span class="text-primary">
+                                                {{ poll.address }}
+                                            </span>
+                                        </td>
+                                        <td align="center">
+                                            <a href="{% url 'admin_polls_detail' poll.pk %}" class="text-primary text-center">
+                                                <i class="fa fa-eye"></i>
+                                            </a>
+                                        </td>
+                                        <td align="center">
+                                            <a href="{% url 'admin_delete_all_polls' poll.pk %}" class="text-danger">
+                                                <i class="fa fa-trash"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% empty %}
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- <ul class="list-group list-group-flush">
+                    </ul> -->
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock admin_dashboard %}

@@ -1,0 +1,110 @@
+{% extends 'admin/dashboard.html' %}
+{% load static %}
+
+
+{% block admin_dashboard %}
+<!-- main content-->
+<div class="main-content p-2">
+    <div class="db-banner-wrapper container">
+        <div class="title-wrapper mb-5">
+            <div class="title-content">
+                <h1 class="h3 text-primary text-center">{{ poll.title }} | {{ poll.address }}</h1>
+                <hr class="mt-2">
+            </div>
+        </div>
+        <div class="row justify-content-center align-items-center">
+            <!-- No of participants -->
+            <div class="col-sm-12 col-md-3">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="d-flex align-items-center">
+                            <div class="card-image p-4 bg-primary">
+                                <i class="fa fa-users fa-3x text-light"></i>
+                            </div>
+                            <div class="card-text px-2 text-muted">
+                                <h6">Participants</h6>
+                                    <h3 class="font-weight-bold display-5">{{ participants.count }}</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- No of contestants -->
+            <div class="col-sm-12 col-md-3">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="d-flex align-items-center">
+                            <div class="card-image p-4 bg-secondary">
+                                <i class="fa fa-users fa-3x text-light"></i>
+                            </div>
+                            <div class="card-text px-2 text-muted">
+                                <h6">Judges</h6>
+                                    <h3 class="font-weight-bold display-5">{{ judges.count }}</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- stats -->
+    <div class="participant-list-wrapper pb-5 container">
+        <div class="row justify-content-evenly mt-5">
+            <!-- participants list -->
+            <div class="col-sm-12 col-md-5">
+                <h5 class="text-muted">Contestants</h5>
+                <ul class="list-group participant-list">
+                    {% for users in participants %}
+                    <li class="list-group-item">
+                        <a href="" target="_blank" rel="noopener noreferrer" class="nav-link p-0"
+                            data-id="{{ users.participant.user.id}}" data-poll="{{ poll_address }}">
+                            <div class="d-flex align-items-center">
+                                <div class="p-image">
+                                    <img src="{% static 'images/bt1.png'%}" alt="">
+                                </div>
+                                <div class="p-text">
+                                    <span>{{ users.participant.user.username}}</span>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    {% empty %}
+                    <li class="list-group-item">
+                        <p class="text-muted">No participants were found found</p>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <!-- Judges LIst -->
+            <div class="col-sm-12 col-md-5">
+                <h5 class="text-muted">Judges</h5>
+                <ul class="list-group participant-list">
+                    {% for users in judges %}
+                    <li class="list-group-item">
+                        <a href="" target="_blank" rel="noopener noreferrer" class="nav-link p-0"
+                            data-id="{{ users.participant.user.id}}" data-poll="{{ poll_address }}">
+                            <div class="d-flex align-items-center">
+                                <div class="p-image">
+                                    <img src="{% static 'images/bt1.png'%}" alt="">
+                                </div>
+                                <div class="p-text">
+                                    <span>{{ users.judge.user.username}}</span>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    {% empty %}
+                    <li class="list-group-item">
+                        <p class="text-muted">No judges were found</p>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- scoreboard -->
+    {% include 'core/includes/scoreboard.html' %}
+</div>
+{% endblock %}

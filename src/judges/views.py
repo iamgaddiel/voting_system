@@ -72,8 +72,7 @@ class GetParticipantDetail(LoginRequiredMixin, UserPassesTestMixin, View):
         voted_participant = False
 
         # get a participant with a user id
-        get_participant = get_object_or_404(
-            Participant, user=CustomUser.objects.get(id=kwargs.get('id')))
+        get_participant = get_object_or_404(Participant, user=CustomUser.objects.get(id=kwargs.get('id')))
         poll = get_object_or_404(Polls, address=kwargs.get('poll_address'))  # get a single poll
         participant_poll = get_object_or_404(  # get a participant poll
             ParticipantPolls,
@@ -121,24 +120,28 @@ class VoteParticipant(LoginRequiredMixin, UserPassesTestMixin, View):
             participant=participant_id)
         try:
             # check if judge has voted for a participant
-            participant_poll = JudgesPoll.objects.get(
+            judge_poll = JudgesPoll.objects.get(
                 polls=Polls.objects.get(address=poll_address),
                 voted_participant=participant_poll,
                 judge=judge_profile
             )
-            if participant_poll is not None:
+            if judge_poll is not None:
                 return JsonResponse({'error': "you've voted"})
 
-        except JudgesPoll.DoesNotExist:
+        except JudgesPoll.DoesNotExist: # run this code if judge hasn't voted
             participant_poll.vote_count += 1
-            participant_poll.total_rating += rating
-            participant_poll.number_of_votes += 1
+            participant_poll.total_rating += int(rating)
+            participant_poll.vote_count += 1
             participant_poll.save()
             judge_poll = JudgesPoll.objects.get(judge=judge_profile)
             judge_poll.rating = rating
             judge_poll.voted_participant = participant_poll
             judge_poll.is_voted = True
             judge_poll.save()
+
+        except JudgesPoll.MultipleObjectsReturned: # run this code if judge has voted
+            print(judge_poll)
+            return JsonResponse({'data': 'voted'})
 
         return JsonResponse({'data': 'voted'})
 
@@ -183,6 +186,6 @@ class GetRanking(LoginRequiredMixin, UserPassesTestMixin, View):
         if user.is_anonymous:
             return False
         else:
-            if (not user.is_participant) and (not user.is_judge):
+            if (not user.is_participant) and (not user.is_judge) and (not user.is_admin):
                 return False
         return True

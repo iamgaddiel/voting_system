@@ -214,10 +214,11 @@ header{
     margin-left: 10px;
 }
 
+/* profile section */
 .profile-wrapper{
     background: var(--white);
     border-radius: 10px;
-    width: 50vw;
+    width: 70vw;
     margin: auto;
     padding: 10px;
 }
@@ -225,4 +226,30 @@ header{
     width: 10rem;
     height: 10rem;
     position: relative;
+}
+.profile-action-content{
+    display: flex;
+    justify-content: center;
+}
+.profile-action-button{
+    border: 1px solid red;
+    padding: 5px;
+    font-size: small;
+    color: var(--white);
+    text-decoration: none;
+    border-radius: 50px;
+    width: 90px;
+    text-align: center;
+    font-weight: bold;
+    background: #e12929;
+    transition: .4s;
+}
+.profile-action-button:hover{
+    background: #ce0909;
+    color: var(--white);
+}
+
+/* side nav */
+.side-menu {
+    width: 250px;
 }

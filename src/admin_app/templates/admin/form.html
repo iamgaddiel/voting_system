@@ -1,0 +1,25 @@
+{% extends 'admin/dashboard.html' %}
+{% load crispy_forms_tags %}
+
+{% block admin_dashboard %}
+<section class="form-wrapper p-3">
+    <div class="form-content">
+        <div class="form-header d-flex align-items-center ">
+            <a href="{{ traceback_link }}" class="mr-5 h2">
+            <!-- <a href="{% url 'admin_polls_list' %}" class="mr-5 h2"> -->
+                <i class="fa fa-arrow-left"></i>
+            <h2 class="h2" style="margin-left: 10px;">
+                </a> 
+                {{ form_title }} Form
+            </h2>
+        </div>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <div class="form-group mt-4">
+                <input type="submit" value="Create" class="btn btn-primary btn-block">
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock admin_dashboard %}

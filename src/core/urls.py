@@ -18,4 +18,5 @@ urlpatterns = [
     # other apps
     path('participants/en/', include('participants.urls')),
     path('judges/en/', include('judges.urls')),
+    path('platform/bck/admin/', include('admin_app.urls')),
 ]

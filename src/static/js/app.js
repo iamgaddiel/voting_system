@@ -57,10 +57,10 @@ $(() => {
                 .css({ 'display': 'block' })
             $('#rating-wrapper').css({ 'display': 'none' })
         }
-        else {
-            $('#rating-wrapper').css({ 'display': 'none' })
-            $('#voteBtn').css({ 'display': 'none' })
-        }
+        // else {
+            // $('#rating-wrapper').css({ 'display': 'none' })
+        //     $('#voteBtn').css({ 'display': 'none' })
+        // }
         $('#participantName').html(fullName);
         $('#participantEmail').html(data.email);
         $('#participantStack').html(data.stack);
@@ -82,6 +82,7 @@ $(() => {
         } catch (err) {
             console.log(err)
         }
+        $('#rating-wrapper').css({ 'display': 'none' })
         $(voteBtn)
             .attr({ 'disabled': true, 'class': 'btn btn-secondary' })
             .html('<i class="fas fa-thumbs-up"></i> you\'ve voted')
@@ -89,12 +90,11 @@ $(() => {
 
     // update ranking
 
-
     // update score value label
     $('#ratingValue').on('change', displayVoteRating)
     $('#ratingValue').on('input', displayVoteRating)
 
-// update participant ranking
+    // update participant ranking
     // setInterval(getCurrentRanking, 3000)
     getCurrentRanking();
 
@@ -105,14 +105,34 @@ $(() => {
         $('.profile-preview').toggle(100)
     })
 
+
+    $('#deleteAllBtn').on('click', handleDelete)  // Delete all instance of a Model
+    $('#deleteBtn').on('click', handleDelete) // Delete single model instance
+
+
     // ====================================== [ Functions ] =========================================
+
+    async function handleDelete(event) {
+        event.preventDefault()
+        let endPoint = $(this).attr('href')
+        let confirmation = confirm('Are you sure you want to delete everything ?')
+        if (confirmation) {
+            await deleteAllObjects(endPoint)
+            location.reload
+        }
+    }
+
+    // delete all instance of model
+    async function deleteObjects(endPoint) {
+        return (await fetch(endPoint, { method: 'GET' })).json()
+    }
 
     async function getCurrentRanking() {
         try {
             const pollAddress = location.pathname.split('/')[5]
-            const endPoint = `${baseUrl}judges/en/get/participant/rankings/${[pollAddress]}/`
+            const endPoint = `${baseUrl}judges/en/get/participant/rankings/${[pollAddress]}`
             const { data, error } = await fetchData(endPoint)
-            
+
             if (!data) {
                 console.error(error)
             } else {
@@ -120,8 +140,8 @@ $(() => {
                 let scores = ''
 
                 data.poll_details.map((
-                    { 
-                        first_name, 
+                    {
+                        first_name,
                         last_name,
                         username,
                         average_rating
@@ -129,7 +149,7 @@ $(() => {
                     scores += `<li class="list-group-item">
                     <div class="d-flex justify-content-between">
                         <div>
-                            <span>${index+=1} |</span>
+                            <span>${index += 1} |</span>
                             <b class="ml-5" style="margin-left: 5px;">${first_name} ${last_name} | ${username}</b>
                         </div>
                         <div>

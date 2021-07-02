@@ -1,0 +1,57 @@
+{% extends 'admin/dashboard.html' %}
+
+{% block admin_dashboard %}
+<section class="title">
+    <h1 class="text-primary text-center h1 mb-4 text-uppercase"><i class="fa fa-school"></i> Admins</h1>
+</section>
+<section class="poll-panel mt2 d-flex justify-content-around">
+    <a href="{% url 'admin_polls_delete' %}" class="btn text-danger font-weight-bold" id="deleteAllBtn">
+        <i class="fa fa-trash"></i> delete all
+    </a>
+    <a href="{% url 'admin_user_create' %}" class="btn text-primary font-weight-bold" id="deleteAllBtn">
+        <i class="fa fa-plus-circle"></i> add judge
+    </a>
+</section>
+<section class="list-wrapper mt-3">
+    <div class="list-content">
+        <div class="card">
+            <div class="card-body">
+
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class="text-muted">
+                            <tr>
+                                <th>S/N</th>
+                                <th>Username</th>
+                                <th>view</th>
+                                <th>delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for admin in admins %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ admin.username }}</td>
+                                <td align="left">
+                                    <a href="{% url 'admin_user_get' admin.pk %}" class="text-primary">
+                                        <i class="fa fa-eye"></i>
+                                    </a>
+                                </td>
+                                <td align="left">
+                                    <a href="{% url 'admin_user_delete' admin.pk %}" class="text-danger">
+                                        <i class="fa fa-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <!-- <ul class="list-group list-group-flush">
+                    </ul> -->
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock admin_dashboard %}

@@ -12,16 +12,22 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
+import json
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+
+ENV_PATH =  os.path.join(BASE_DIR, 'env.json')
+with open(ENV_PATH, 'r') as data:
+    env = json.loads(data.read())
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-6k-d4qe2ebrwpp3r+_@s%c!77gp#r(b&ia_jzt0l%+h=nebwtj'
+SECRET_KEY = env.get('APP_PRIVATE_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -44,6 +50,7 @@ INSTALLED_APPS = [
     'participants',
     'judges',
     'polls',
+    'admin_app',
 
     # 3rd party libs
     'crispy_forms',

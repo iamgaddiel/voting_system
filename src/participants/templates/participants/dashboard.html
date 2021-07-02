@@ -5,8 +5,8 @@
 {% block content %}
 <div id="mySidenav" class="sidenav">
     <a href="javascript:void(0)" class="closebtn nav-link" onclick="closeNav()">&times;</a>
-    {% block side_menu %}
     <div class="side-menu p-3">
+        {% block side_menu %}
         <div class="voting-address">
             <form id="addressSearchForm">
                 {% csrf_token %}
@@ -38,8 +38,8 @@
                 {% endfor %}
             </ul>
         </div>
+        {% endblock %}
     </div>
-    {% endblock %}
 </div>
 
 <div id="main">
@@ -61,7 +61,8 @@
                     <a href="{% url 'logout' %}" class="text-danger ml-3"><i class="fa fa-sign-out-alt"></i></a>
                 </div>
                 <div class="avatar d-flex align-items-center profile_btn ">
-                    <button class="d-flex align-items-center justify-content-center" id="toggleProfile" data-toggle="false">
+                    <button class="d-flex align-items-center justify-content-center" id="toggleProfile"
+                        data-toggle="false">
                         <span class="text-dark mx-3"> @{{ user.username }}</span>
                         <div class="p-image">
                             <a href="{% url 'participant_profile' %}">
@@ -71,7 +72,7 @@
                     </button>
                 </div>
             </div>
-            
+
             <!-- profile preview -->
             {% include 'core/includes/profile_preview.html' %}
         </div>

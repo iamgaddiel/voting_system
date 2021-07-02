@@ -1,0 +1,73 @@
+{% extends 'admin/dashboard.html' %}
+{% load static %}
+
+
+{% block admin_dashboard %}
+<div class="main-content p-3">
+    <div class="profile-wrapper">
+        <div class="profile-content">
+            <div class="p-image mx-auto p-image-lg animate__animated animate__zoomIn animate__faster">
+                <img src="{% static 'images/bt2.png'%}" alt="" lazy-loading="true">
+            </div>
+        </div>
+        <div class="profile-text p-3">
+            {% if object.is_admin %}
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item p-0">
+                    <small class="text-muted">Full name</small>
+                    <h5 class="font-weight-bold">{{ object.first_name }} {{ object.last_name}}</h5>
+                </li>
+                <li class="list-group-item p-0">
+                    <small class="text-muted">Username</small>
+                    <h5 class="font-weight-bold">{{ object.username }}</h5>
+                </li>
+                <li class="list-group-item p-0">
+                    <small class="text-muted">Email</small>
+                    <h5 class="font-weight-bold">{{ object.email }}</h5>
+                </li>
+            {% else %}
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item p-0">
+                    <small class="text-muted">Full name</small>
+                    <h5 class="font-weight-bold">{{ object.user.first_name }} {{ user.last_name}}</h5>
+                </li>
+                <li class="list-group-item p-0">
+                    <small class="text-muted">Username</small>
+                    <h5 class="font-weight-bold">{{ object.user.username }}</h5>
+                </li>
+                <li class="list-group-item p-0">
+                    <small class="text-muted">Email</small>
+                    <h5 class="font-weight-bold">{{ object.user.email }}</h5>
+                </li>
+                <li class="list-group-item p-0">
+                    <small class="text-muted">Phone</small>
+                    <h4 class="font-weight-bold">{{ object.user.phone }}</h4>
+                </li>
+                <li class="list-group-item p-0">
+                    <small class="text-muted">Gender</small>
+                    <h4 class="font-weight-bold">{{ object.user.gender|lower }}</h4>
+                </li>
+                <li class="list-group-item p-0">
+                    <small class="text-muted">date-of-birth</small>
+                    <h4 class="font-weight-bold">{{ object.user.dob }}</h4>
+                </li>
+                <li class="list-group-item p-0">
+                    <small class="text-muted">No of poll joined</small>
+                    <h4 class="font-weight-bold">{{ object_polls.count }}</h4>
+                </li>
+            {% endif %}
+            </ul>
+
+            <div class="profile-action">
+                <div class="profile-action-content">
+                    {% if is_judge %}
+                    <a href="{% url 'admin_judge_delete' object.user.id %}" class="profile-action-button"><i class="fa fa-trash"></i></a>
+                    {% elif is_participant %}
+                    <a href="{% url 'admin_participants_delete' object.user.id %}" class="profile-action-button"><i class="fa fa-trash"></i></a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

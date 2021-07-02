@@ -1,0 +1,123 @@
+{% extends 'participants/dashboard.html' %}
+{% load static %}
+
+{% block side_menu %}
+<section class="menu-list">
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+            <a href="{% url 'admin_dashboard' %}" class="nav-link">
+                <i class="fa fa-home"></i> Dashboard
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="{% url 'admin_polls_list' %}" class="nav-link">
+                <i class="fa fa-bookmark"></i> Polls
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="{% url 'admin_participants_list' %}" class="nav-link">
+                <i class="fa fa-users"></i> Participants
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="{% url 'admin_judges_list' %}" class="nav-link">
+                <i class="fa fa-pen-nib"></i> Judges
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="{% url 'admin_user_list' %}" class="nav-link">
+                <i class="fa fa-school"></i> Admins
+            </a>
+        </li>
+    </ul>
+</section>
+{% endblock side_menu %}
+
+
+{% block dashboard_content %}
+<section class="ad-db-wrapper w-100 h-100 py-5">
+    <section class="container">
+        {% block admin_dashboard %} 
+            <section class="platform-stats ">
+                <div class="row justify-content-even align-items-center">
+                    <div class="col-sm-12 col-md-4 mt-4">
+                        <div class="card bg-light">
+                            <div class="card-content">
+                                <div class="d-flex align-items-center">
+                                    <div class="card-image p-4 bg-secondary">
+                                        <i class="fa fa-users fa-3x text-light"></i>
+                                    </div>
+                                    <div class="card-text px-2 text-muted">
+                                        <h6">Participants</h6>
+                                            <h3 class="font-weight-bold display-5">{{ total_participants }}</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-4 mt-4">
+                        <div class="card bg-light">
+                            <div class="card-content">
+                                <div class="d-flex align-items-center">
+                                    <div class="card-image p-4 bg-primary">
+                                        <i class="fa fa-users fa-3x text-light"></i>
+                                    </div>
+                                    <div class="card-text px-2 text-muted">
+                                        <h6">Judges</h6>
+                                            <h3 class="font-weight-bold display-5">{{ total_judges }}</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-4 mt-4">
+                        <div class="card bg-light">
+                            <div class="card-content">
+                                <div class="d-flex align-items-center">
+                                    <div class="card-image p-4 bg-info">
+                                        <i class="fa fa-users fa-3x text-light"></i>
+                                    </div>
+                                    <div class="card-text px-2 text-muted">
+                                        <h6">Admins</h6>
+                                            <h3 class="font-weight-bold display-5">{{ total_admins }}</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-4 mt-4">
+                        <div class="card bg-light">
+                            <div class="card-content">
+                                <div class="d-flex align-items-center">
+                                    <div class="card-image p-4 bg-warning">
+                                        <i class="fa fa-users fa-3x text-light"></i>
+                                    </div>
+                                    <div class="card-text px-2 text-muted">
+                                        <h6">Polls</h6>
+                                            <h3 class="font-weight-bold display-5">{{ total_polls }}</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-4 mt-4">
+                        <div class="card bg-light">
+                            <div class="card-content">
+                                <div class="d-flex align-items-center">
+                                    <div class="card-image p-4 bg-warning">
+                                        <i class="fa fa-users fa-3x text-light"></i>
+                                    </div>
+                                    <div class="card-text px-2 text-muted">
+                                        <h6">Total Users</h6>
+                                            <h3 class="font-weight-bold display-5">{{ total_users }}</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        {% endblock admin_dashboard %}
+    </section>
+</section>
+{% endblock dashboard_content  %}

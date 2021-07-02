@@ -26,7 +26,9 @@ class Dispacther(View):
         if user.is_participant:
             url = "participant_dashboard"
         if user.is_judge:
-            url = "judges_dashboard"        
+            url = "judges_dashboard"   
+        if user.is_admin:
+            url = "admin_dashboard"
         return redirect(url)
 
 class Regisration(CreateView):
