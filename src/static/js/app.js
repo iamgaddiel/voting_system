@@ -138,19 +138,25 @@ $(() => {
             } else {
                 console.log(data.poll_details)
                 let scores = ''
-
-                data.poll_details.map((
+                data.poll_details.sort((a, b) => b.average_rating - a.average_rating)
+                data.poll_details.forEach((
                     {
                         first_name,
                         last_name,
                         username,
-                        average_rating
+                        average_rating,
+                        profile_image
                     }, index) => {
                     scores += `<li class="list-group-item">
                     <div class="d-flex justify-content-between">
-                        <div>
-                            <span>${index += 1} |</span>
-                            <b class="ml-5" style="margin-left: 5px;">${first_name} ${last_name} | ${username}</b>
+                        <div class="d-flex align-items-center">
+                            <div class="p-image">
+                                <img src="${profile_image}" alt="judges_profile">
+                            </div>
+                            <div>
+                                <b class="ml-5" style="margin-left: 5px;">${first_name} ${last_name} </b> <br>
+                                <small class="text-muted">@${username}</small>
+                            </div>
                         </div>
                         <div>
                             <small>

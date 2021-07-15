@@ -51,11 +51,11 @@
                 </div>
                 <div class="header-controls">
                     {% if user.is_participant %}
-                    <a href="{% url 'participant_dashboard' %}" class="text-muted"><i class="fa fa-home"></i></a>
-                    <a href="{% url 'participant_profile' %}" class="text-primary mx-3"><i class="fa fa-user"></i></a>
+                    <a href="{% url 'participant_dashboard' %}" class="text-light"><i class="fa fa-home"></i></a>
+                    <a href="{% url 'participant_profile' %}" class="text-light mx-3"><i class="fa fa-user"></i></a>
                     {% elif user.is_judge %}
-                    <a href="{% url 'judges_dashboard' %}" class="text-muted"><i class="fa fa-home"></i></a>
-                    <a href="{% url 'participant_profile' %}" class="text-primary mx-3"><i class="fa fa-user"></i></a>
+                    <a href="{% url 'judges_dashboard' %}" class="text-light"><i class="fa fa-home"></i></a>
+                    <a href="{% url 'judges_profile' %}" class="text-light mx-3"><i class="fa fa-user"></i></a>
                     {% endif %}
                     <a href="" class="text-success ml-3"><i class="fa fa-bar-chart" aria-hidden="true"></i></a>
                     <a href="{% url 'logout' %}" class="text-danger ml-3"><i class="fa fa-sign-out-alt"></i></a>
@@ -65,9 +65,11 @@
                         data-toggle="false">
                         <span class="text-dark mx-3"> @{{ user.username }}</span>
                         <div class="p-image">
-                            <a href="{% url 'participant_profile' %}">
-                                <img src="{% static 'images/bt2.png'%}" alt="">
-                            </a>
+                            {% if user.is_participant %}
+                            <img src="{{ user.participant.image.url }}" alt="participant_image">
+                            {% elif user.is_judge %}
+                            <img src="{{ user.judgeprofile.profile_picture.url }}" alt="judges_profile">
+                            {% endif %}
                         </div>
                     </button>
                 </div>
@@ -82,7 +84,7 @@
             <div class="d-flex">
                 {% block dashboard_content %}
                 <!-- main content-->
-                <div class="main-content p-3 mt-4">
+                <div class="main-content pt-3 mt-4">
                     <h1>Welcome to your dashboard</h1>
                 </div>
                 {% endblock %}

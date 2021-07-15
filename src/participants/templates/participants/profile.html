@@ -7,16 +7,27 @@
     <div class="profile-wrapper">
         <div class="profile-content">
             <div class="p-image mx-auto p-image-lg animate__animated animate__zoomIn animate__faster">
-                <img src="{% static 'images/bt2.png'%}" alt="">
+                {% if user.is_participant %}
+                <img src="{{ user.participant.image.url }}" alt="participant_image">
+                {% elif user.is_judge %}
+                <img src="{{ user.judgeprofile.profile_picture.url }}" alt="judges_profile">
+                {% endif %}
             </div>
         </div>
-        <div class="profile-text">
-            <h1 class="text-center text-muted">{{ user.username }}</h1>
-            <h1 class="text-center text-muted">{{ user.firstname }} {{ user.lastname}}</h1>
+        <div class="profile-text mt-4">
+            <h1 class="text-center text-muted">@{{ user.username|lower }}</h1>
+            <h3 class="text-center text-muted">{{ user.first_name }} {{ user.last_name}}</h3>
             <h6 class="text-center text-muted">{{ user.email }}</h6>
             <h4 class="text-center text-muted">{{ user.phone }}</h4>
             <h5 class="text-center text-muted">{{ user.gender|lower }}</h5>
-            <h6 class="text-center text-muted">{{ usere.dob }}</h6>
+            <h5 class="text-center text-muted">{{ user.dob }}</h5>
+        </div>
+        <div class="profile-update d-flex justify-content-center">
+            {% if user.is_participant %}
+            <a href="" class="nav-link p-0">Update</a>
+            {% elif user.is_judge %}
+            <a href="{% url 'judges_profile_update' %}" class="nav-link p-0">Update</a>
+            {% endif %}
         </div>
     </div>
 </div>

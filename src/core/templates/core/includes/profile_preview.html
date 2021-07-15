@@ -1,10 +1,14 @@
 {% load static %}
 <div class="profile-preview p-4 animate__animated animate__fadeIn animated__fast">
     <div class="profile-image rounded-circle">
-        <img src="{% static 'images/bt2.png'%}" alt="profile-image">
+        {% if user.is_participant %}
+        <img src="{{ user.participant.image.url }}" alt="profile-image">
+        {% elif user.is_judge %}
+        <img src="{{ user.judgeprofile.profile_picture.url }}" alt="profile-image">
+        {% endif %}
     </div>
     <div class="profile-detail mt-4">
-        <h6 class="text-center">{{ user.first_name }} {{ user.last_name }}</h6>
+        <h6 class="text-center text-muted">{{ user.first_name }} {{ user.last_name }}</h6>
         <p class="text-center text-muted mb-0">{{ user.email }}</p>
         <p class="text-center text-muted m-0">
             <b>
@@ -20,6 +24,10 @@
         </p>
     </div>
     <div class="update-profile mt-5 mx-auto w-50">
-        <a href="">update profile</a>
+        {% if user.is_participant %}
+        <a href="{% url 'participant_profile' %}" class="text-light mx-3">view profile</a>
+        {% elif user.is_judge %}
+        <a href="{% url 'judges_profile' %}" class="text-light mx-3">view profile</a>
+        {% endif %}
     </div>
 </div>

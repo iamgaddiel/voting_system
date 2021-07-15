@@ -1,12 +1,13 @@
 import json
 from typing import Any, Dict, Optional
-from django.db import models
-from django.http import response
 from django.http.response import JsonResponse
-from django.shortcuts import get_object_or_404, render
-from django.views.generic import TemplateView
+from django.shortcuts import get_object_or_404, redirect, render
+from django.views.generic import TemplateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic.base import View
+from django.contrib.auth.decorators import login_required, user_passes_test
+from core.forms import UserUpdateForm
+from judges.forms import JudgesUpdateForm
 
 from judges.models import JudgeProfile, JudgesPoll
 from participants.models import Participant, ParticipantPolls
@@ -25,6 +26,49 @@ class JudgesDashboardIndex(LoginRequiredMixin, TemplateView):
         context['polls'] = JudgesPoll.objects.filter(judge=judge_profile)
         context['account_type'] = "judge"
         return context
+
+class JudgesProfileDashboard(LoginRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        template_name = "participants/profile.html"
+        context = {}
+        return render(request, template_name, context)
+
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        judge_profile = JudgeProfile.objects.get(user=self.request.user)
+
+        # get all poll that partaining to this judge
+        context['polls'] = JudgesPoll.objects.filter(judge=judge_profile)
+        return context
+
+class JudgesProfileUpdate(LoginRequiredMixin, UserPassesTestMixin, View):
+    def get(self, request, *args, **kwargs):
+        template_name = "participants/profile_update.html"
+
+        #! populate template form 
+        context = {
+            "main_form": UserUpdateForm(instance=request.user),
+            "secondary_form": JudgesUpdateForm(instance=request.user.judgeprofile),
+        }
+        return render(request, template_name, context)
+
+    def post(self, request, *args, **kwargs):
+        user_update_form = UserUpdateForm(request.POST, request.FILES, request.user)
+        judge_update_form =  JudgesUpdateForm(request.POST, request.FILES, instance=request.user.judgeprofile)
+
+        #! check if both submotted forms are valid
+        if user_update_form.is_valid() and judge_update_form.is_valid():
+            user_update_form.save()
+            judge_update_form.save()
+            return redirect("judges_profile")
+        else:
+            print(request.POST)
+            return JsonResponse({"error": request.POST})
+
+    def test_func(self) -> Optional[bool]:
+        if not self.request.user.is_judge:
+            return False
+        return True
 
 
 class JudgePollDashboard(LoginRequiredMixin, TemplateView):
@@ -169,7 +213,8 @@ class GetRanking(LoginRequiredMixin, UserPassesTestMixin, View):
                             'username' : participant_poll.participant.user.username,
                             'first_name': participant_poll.participant.user.first_name,
                             'last_name': participant_poll.participant.user.last_name,
-                            'average_rating': participant_poll.get_avarage_rating()
+                            'average_rating': participant_poll.get_avarage_rating(),
+                            'profile_image': participant_poll.participant.image.url
                         }
                         polls_detail.append(rating_details)
             

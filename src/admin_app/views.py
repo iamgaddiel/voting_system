@@ -8,6 +8,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin, 
 from django.views.generic import TemplateView, CreateView, UpdateView, ListView
 from django.views.generic.base import View
 from django.views.generic.detail import DetailView
+from django.contrib.auth.hashers import make_password
 
 from polls.models import Polls
 from core.models import CustomUser
@@ -36,11 +37,7 @@ class AdminDashboard(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
             return True
         return False
 
-
-
-
 # ============================================[ Polls ] ========================================
-
 class ListPoll(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
     template_name = 'admin/list_polls.html'
 
@@ -132,8 +129,6 @@ class GetPoll(UserPassesTestMixin, LoginRequiredMixin, DetailView):
         return False
 
 
-
-
 # ====================================== [ Judge ] ==========================================
 
 class CreateJudge(LoginRequiredMixin, UserPassesTestMixin, CreateView):
@@ -145,6 +140,7 @@ class CreateJudge(LoginRequiredMixin, UserPassesTestMixin, CreateView):
 
     def form_valid(self, form) -> HttpResponse:
         form.instance.is_judge = True
+        form.instance.password = make_password(form.instance.password)
         form.save(commit=True)
         JudgeProfile.objects.create(user=form.instance)
         return redirect('admin_judges_list')
@@ -163,8 +159,14 @@ class CreateJudge(LoginRequiredMixin, UserPassesTestMixin, CreateView):
 
 class DeleteJudge(LoginRequiredMixin, UserPassesTestMixin, View):
     def get(self, *args, **kwargs):
-        get_object_or_404(JudgeProfile, id=kwargs.get('id')).delete()
+        judge = get_object_or_404(JudgeProfile, id=kwargs.get('id'))
+        CustomUser.objects.get(id=judge.user.id).delete()
         return redirect('admin_judges_list')
+
+    def test_func(self) -> Optional[bool]:
+        if self.request.user.is_admin:
+            return True
+        return False   
 
 
 class GetJudge(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
@@ -188,6 +190,7 @@ class ListJudges(LoginRequiredMixin, UserPassesTestMixin, ListView):
     queryset = JudgeProfile.objects.all()
     template_name = "admin/list_judges.html"
     context_object_name = "judges"
+    ordering = ['-id']
 
     def test_func(self) -> Optional[bool]:
         if self.request.user.is_admin:

@@ -17,14 +17,11 @@ class CustomUser(AbstractUser):
     is_judge = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
 
-
     def __str__(self) -> str:
         return 'username: {0} | {1} {2}'.format(self.username, self.first_name, self.last_name)
 
-    # def get_absolute_url(self):
-    #     pass
     
-    class Profile(models.Model):
+class Profile(models.Model):
         user = models.OneToOneField('CustomUser', on_delete=models.CASCADE)
         image = models.ImageField(upload_to="profile-images", default="profile.png")
 

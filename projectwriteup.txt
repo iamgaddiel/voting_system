@@ -1,0 +1,39 @@
+CustomUser
+    -is_admin
+    -is_judge
+    -is_participant
+    + authenticate()
+    + view profile()
+    + signup()
+    + signout()
+    
+Participant Profile
+    + join_poll()
+    + upload_project_link()
+    + viw
+Participant Poll
+JudgeProfile
+    + join_poll()
+    + vote_participant()
+    + rank_participant()
+    
+Judge Poll
+Admin
+    + view_all_polls()
+    + create_all_polls()
+    + delete_all_polls()
+    + delete_single_polls()
+    + add_admin()
+    + remove_admin()
+    + create_judge()
+    + view_all_judges()
+    + delete_all_judges()
+    + delete_single_judges()
+    
+# of white #f5f7f7 (background)
+# white card #ffffff (card background)
+# button color #3770ff (pre hoverr)
+# button colorr #00068e (hover)
+
+SUICL
+

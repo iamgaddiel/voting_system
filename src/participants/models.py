@@ -13,6 +13,7 @@ class Participant(models.Model):
     ]
     id = models.UUIDField(default=uuid.uuid4, unique=True, editable=False, primary_key=True)
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    image = models.ImageField(default="participant_image.png", upload_to="participant_profile_images")
     stack = models.CharField(max_length=30, choices=STACKS, default=STACKS[0])
     
 

@@ -78,16 +78,16 @@
     <div class="participant-list-wrapper pb-5 container">
         <div class="row justify-content-even mt-5">
             <!-- participants list -->
-            <div class="col-sm-12 col-md-4">
-                <h5 class="text-muted">Contestants</h5>
-                <ul class="list-group participant-list">
+            <div class="col-sm-12 col-md-6">
+                <h6 class="text-muted">Contestants</h6>
+                <ul class="list-group participant-list shadow-card p-3">
                     {% for users in participants %}
                     <li class="list-group-item">
                         <a href="" target="_blank" rel="noopener noreferrer" class="participantLink nav-link p-0"
                             data-id="{{ users.participant.user.id}}" data-poll="{{ poll_address }}">
                             <div class="d-flex align-items-center">
                                 <div class="p-image">
-                                    <img src="{% static 'images/bt1.png'%}" alt="">
+                                    <img src="{{ users.participant.image.url }}" alt="participant image">
                                 </div>
                                 <div class="p-text">
                                     <span>{{ users.participant.user.username}}</span>
@@ -99,11 +99,11 @@
                 </ul>
             </div>
             <!-- Participant Detail -->
-            <div class="col-sm-12 col-md-4">
-                <h5 class="text-muted">Detail</h5>
+            <div class="col-sm-12 col-md-6">
+                <h6 class="text-muted">Participant detail</h6>
                 <div class="detail-wrapper">
                     <div class="detail-content">
-                        <div class="card p-3">
+                        <div class="card p-3 shadow-card">
                             <div class="detail-image">
                                 <div class="rounded-circle mx-auto" style="width: 50px; height: 50px;">
                                     <img src="{% static 'images/user.svg' %}" alt="profile-skeleton"

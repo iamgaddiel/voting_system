@@ -1,0 +1,36 @@
+{% extends 'participants/dashboard.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+
+{% block dashboard_content %}
+<div class="main-content p-3 mt-4">
+    <div class="profile-wrapper">
+        <div class="auth-form-container p-5">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="p-image mx-auto p-image-lg animate__animated animate__zoomIn animate__faster">
+                    {% if user.is_participant %}
+                    <img src="{{ user.participant.image.url }}" alt="participant_image">
+                    {% elif user.is_judge %}
+                    <img src="{{ user.judgeprofile.profile_picture.url }}" alt="judges_profile">
+                    {% endif %}
+                </div>
+                {% for field in main_form %}
+                <div class="form-floating mt-4">
+                    {{ field|as_crispy_field }}
+                </div>
+                {% endfor %}
+                {% for field in secondary_form %}
+                <div class="form-floating mt-4">
+                    {{ field|as_crispy_field }}
+                </div>
+                {% endfor %}
+                <div class="form-group mt-4 p-4">
+                    <input type="submit" value="Update" class="auth-btn">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
