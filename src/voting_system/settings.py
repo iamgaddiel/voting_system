@@ -161,7 +161,7 @@ AUTH_USER_MODEL = 'core.CustomUser'
 # authentication urls
 LOGIN_URL = '/login/'
 
-LOGIN_REDIRECT_URL = 'dispatcher/'
+LOGIN_REDIRECT_URL = 'verify_code'
 
 LOGOUT_URL = '/logout/'
 
@@ -193,3 +193,17 @@ CORS_ALLOW_METHODS = [
 #     'x-csrftoken',
 #     'x-requested-with',
 # ]
+
+# Email configurations
+if DEBUG:
+    EMAIL_HOST = 'smtp.mailtrap.io'
+    EMAIL_HOST_USER = env.get("TEST_EMAIL_HOST_USER")
+    EMAIL_HOST_PASSWORD = env.get("TEST_EMAIL_HOST_PASSWORD")
+    EMAIL_PORT = '2525'
+else:
+    EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+    EMAIL_HOST = "smtp.gmail.com"
+    EMAIL_HOST_USER = env.get("EMAIL_HOST_USER")
+    EMAIL_HOST_PASSWORD = env.get("EMAIL_HOST_PASSWORD")
+    EMAIL_PORT = 587
+    EMAIL_USE_TLS = True

@@ -16,6 +16,11 @@ class UserCreationForm(UserCreationForm):
             'dob',
             'gender'
         ]
+        widgets = {
+            'dob': widgets.DateInput(attrs={
+                "type": "date"
+            })
+        }
 
 class UserUpdateForm(forms.ModelForm):
     class Meta:
@@ -26,3 +31,8 @@ class UserUpdateForm(forms.ModelForm):
             'last_name', 
             'email', 
         ]
+
+class VerificationForm(forms.Form):
+    verification_code = forms.CharField(max_length=10, widget=widgets.TextInput(attrs={
+        "type": "password"
+    }))

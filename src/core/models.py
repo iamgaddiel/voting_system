@@ -1,6 +1,7 @@
 from django.db import models
 import uuid
 from django.contrib.auth.models import AbstractUser
+from django.db.models.deletion import CASCADE
 
 
 class CustomUser(AbstractUser):
@@ -27,3 +28,10 @@ class Profile(models.Model):
 
         def __str__(self) -> str:
             return "{0} profile".format(self.user)
+
+class TempAccessCodes(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=CASCADE)
+    code = models.CharField(max_length=10)
+    
+    def __str__(self):
+        return f"{self.user.username} | {self.code}"

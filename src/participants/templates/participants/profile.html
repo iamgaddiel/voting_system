@@ -15,16 +15,42 @@
             </div>
         </div>
         <div class="profile-text mt-4">
-            <h1 class="text-center text-muted">@{{ user.username|lower }}</h1>
-            <h3 class="text-center text-muted">{{ user.first_name }} {{ user.last_name}}</h3>
-            <h6 class="text-center text-muted">{{ user.email }}</h6>
-            <h4 class="text-center text-muted">{{ user.phone }}</h4>
-            <h5 class="text-center text-muted">{{ user.gender|lower }}</h5>
-            <h5 class="text-center text-muted">{{ user.dob }}</h5>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <small class="text-muted">Username</small>
+                    <h6 class="text-muted">@{{ user.username|lower }}</h6>
+                </li>
+                <li class="list-group-item">
+                    <small class="text-muted">Fullname </small>
+                    <h6 class="text-muted">{{ user.first_name }} {{ user.last_name}}</h6>
+                </li>
+                <li class="list-group-item">
+                    <small class="text-muted">Email </small>
+                    <h6 class="text-muted">{{ user.email }}</h6>
+                </li>
+                <li class="list-group-item">
+                    <small class="text-muted">Phone</small>
+                    <h6 class="text-muted">{{ user.phone }}</h6>
+                </li>
+                <li class="list-group-item">
+                    <small class="text-muted">Sex</small>
+                    <h6 class="text-muted">{{ user.gender|lower }}</h6>
+                </li>
+                <li class="list-group-item">
+                    <small class="text-muted">Date of birth</small>
+                    <h6 class="text-muted">{{ user.dob }}</h6>
+                </li>
+                {% if user.is_participant %}
+                <li class="list-group-item d-flex justify-content-between">
+                    <h5 class="text-center text-muted">Stack</h5>
+                    <h5 class="text-center text-muted">{{ user.participant.stack  }}</h5>
+                </li>
+                {% endif %}
+            </ul>
         </div>
         <div class="profile-update d-flex justify-content-center">
             {% if user.is_participant %}
-            <a href="" class="nav-link p-0">Update</a>
+            <a href="{% url 'participant_profile_update' %}" class="nav-link p-0">Update</a>
             {% elif user.is_judge %}
             <a href="{% url 'judges_profile_update' %}" class="nav-link p-0">Update</a>
             {% endif %}

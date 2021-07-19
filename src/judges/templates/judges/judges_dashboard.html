@@ -5,15 +5,21 @@
 {% block dashboard_content %}
 <!-- main content-->
 <div class="main-content p-3 mt-4">
-    <div class="db-banner-wrapper container">
-        <div class="row justify-content-even align-items-center">
+    <!-- poll title  -->
+    <div
+        class="w-25 mx-auto bg-primary rounded-top rounded-right rounded-bottom rounded-left p-2 text-center text-light">
+        <h4 class="h4 text-uppercase font-weight-bold">{{ current_poll.title }}</h4>
+        <small class="font-weight-bold">{{ current_poll.address}}</small>
+    </div>
+    <div class="db-banner-wrapper container mt-5">
+        <div class="row justify-content-evenly align-items-center">
             <!-- No of participants -->
             <div class="col-sm-12 col-md-3">
-                <div class="card">
+                <div class="card shadow-card">
                     <div class="card-content">
                         <div class="d-flex align-items-center">
-                            <div class="card-image p-4 bg-primary">
-                                <i class="fa fa-users fa-3x text-light"></i>
+                            <div class="card-image p-4 bg-primary rounded-top rounded-bottom rounded-right rounded-left">
+                                <i class="fab fa-connectdevelop fa-3x text-light"></i>
                             </div>
                             <div class="card-text px-2 text-muted">
                                 <h6">Participants</h6>
@@ -25,10 +31,10 @@
             </div>
             <!-- No of contestants -->
             <div class="col-sm-12 col-md-3">
-                <div class="card">
+                <div class="card shadow-card">
                     <div class="card-content">
                         <div class="d-flex align-items-center">
-                            <div class="card-image p-4 bg-secondary">
+                            <div class="card-image p-4 bg-secondary rounded-top rounded-bottom rounded-right rounded-left">
                                 <i class="fa fa-users fa-3x text-light"></i>
                             </div>
                             <div class="card-text px-2 text-muted">
@@ -41,31 +47,15 @@
             </div>
             <!-- No of contestants -->
             <div class="col-sm-12 col-md-3">
-                <div class="card">
+                <div class="card shadow-card">
                     <div class="card-content">
                         <div class="d-flex align-items-center">
-                            <div class="card-image p-4 bg-danger">
-                                <i class="fa fa-users fa-3x text-light"></i>
+                            <div class="card-image p-4 bg-warning rounded-top rounded-bottom rounded-right rounded-left">
+                                <i class="fa fa-align-left fa-3x text-light"></i>
                             </div>
                             <div class="card-text px-2 text-muted">
                                 <h6">Polls joined</h6>
                                     <h3 class="font-weight-bold display-5">{{polls.count}}</h3>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- No of contestants -->
-            <div class="col-sm-12 col-md-3">
-                <div class="card">
-                    <div class="card-content">
-                        <div class="d-flex align-items-center">
-                            <div class="card-image p-4 bg-primary">
-                                <i class="fa fa-users fa-3x text-light"></i>
-                            </div>
-                            <div class="card-text px-2 text-muted">
-                                <h6">Participants</h6>
-                                    <h3 class="font-weight-bold display-5">4</h3>
                             </div>
                         </div>
                     </div>

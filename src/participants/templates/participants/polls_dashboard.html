@@ -5,15 +5,20 @@
 {% block dashboard_content %}
             <!-- main content-->
             <div class="main-content p-3 mt-4">
-                <div class="db-banner-wrapper container">
-                    <div class="row justify-content-even align-items-center">
+                <!-- poll title  -->
+                <div class="w-25 mx-auto bg-primary rounded-top rounded-right rounded-bottom rounded-left p-2 text-center text-light">
+                    <h4 class="h4 text-uppercase font-weight-bold">{{ current_poll.title }}</h4>
+                    <small class="font-weight-bold">{{ current_poll.address}}</small>
+                </div>
+                <div class="db-banner-wrapper container mt-5">
+                    <div class="row justify-content-evenly align-items-center">
                         <!-- No of participants -->
                         <div class="col-sm-12 col-md-3">
-                            <div class="card">
+                            <div class="card shadow-card">
                                 <div class="card-content">
                                     <div class="d-flex align-items-center">
-                                        <div class="card-image p-4 bg-primary">
-                                            <i class="fa fa-users fa-3x text-light"></i>
+                                        <div class="card-image p-4 bg-primary rounded-top rounded-bottom rounded-right rounded-left">
+                                            <i class="fab fa-connectdevelop fa-3x text-light"></i>
                                         </div>
                                         <div class="card-text px-2 text-muted">
                                             <h6">Participants</h6>
@@ -25,15 +30,15 @@
                         </div>
                         <!-- No of contestants -->
                         <div class="col-sm-12 col-md-3">
-                            <div class="card">
+                            <div class="card shadow-card">
                                 <div class="card-content">
                                     <div class="d-flex align-items-center">
-                                        <div class="card-image p-4 bg-secondary">
+                                        <div class="card-image p-4 bg-secondary rounded-top rounded-bottom rounded-right rounded-left">
                                             <i class="fa fa-users fa-3x text-light"></i>
                                         </div>
                                         <div class="card-text px-2 text-muted">
                                             <h6">Judges</h6>
-                                                <h3 class="font-weight-bold display-5">4</h3>
+                                                <h3 class="font-weight-bold display-5">{{  judges.count }}</h3>
                                         </div>
                                     </div>
                                 </div>
@@ -41,11 +46,11 @@
                         </div>
                         <!-- No of contestants -->
                         <div class="col-sm-12 col-md-3">
-                            <div class="card">
+                            <div class="card shadow-card">
                                 <div class="card-content">
                                     <div class="d-flex align-items-center">
-                                        <div class="card-image p-4 bg-danger">
-                                            <i class="fa fa-users fa-3x text-light"></i>
+                                        <div class="card-image p-4 bg-warning rounded-top rounded-bottom rounded-right rounded-left">
+                                            <i class="fa fa-align-left fa-3x text-light"></i>
                                         </div>
                                         <div class="card-text px-2 text-muted">
                                             <h6">Polls joined</h6>
@@ -55,44 +60,35 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- No of contestants -->
-                        <div class="col-sm-12 col-md-3">
-                            <div class="card">
-                                <div class="card-content">
-                                    <div class="d-flex align-items-center">
-                                        <div class="card-image p-4 bg-primary">
-                                            <i class="fa fa-users fa-3x text-light"></i>
-                                        </div>
-                                        <div class="card-text px-2 text-muted">
-                                            <h6">Participants</h6>
-                                                <h3 class="font-weight-bold display-5">4</h3>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
 
-                <!-- stats -->
+                <!-- Participant List -->
                 <div class="participant-list-wrapper mt-5 pb-5 container">
                     <div class="row justify-content-even">
                         <div class="col-sm-12 col-md-4">
                             <h5 class="text-muted">Contestants</h5>
-                            <ul class="list-group participant-list">
+                            <ul class="list-group participant-list ">
                                 {% for users in participants %}
                                 <li class="list-group-item">
                                     <div class="d-flex align-items-center">
+                                        {% if user.username == users.participant.user.username %}
+
                                         <div class="p-image">
-                                            <img src="{% static 'images/bt2.png'%}" alt="">
+                                            <img src="{{ user.participant.image.url }}" alt="participant profile image ">
                                         </div>
                                         <div class="p-text">
-                                            {% if user.username == users.participant.user.username %}
                                             <span>You</span>
-                                            {% else %}
-                                            <span>{{ users.participant.user.username}}</span>
-                                            {% endif %}
                                         </div>
+                                        {% else %}
+                                        <div class="d-flex align-items-center">
+                                            <div class="p-image">
+                                                <img src="{{ users.participant.image.url }}" alt="participant profile image ">
+                                            </div>
+                                            <div class="p-text">
+                                                <span>{{ users.participant.user.username}}</span>
+                                            </div>
+                                        {% endif %}
                                     </div>
                                 </li>
                                 {% endfor %}
@@ -102,42 +98,28 @@
                         <div class="col-sm-12 col-md-4">
                             <h5 class="text-muted">Judges</h5>
                             <ul class="list-group participant-list">
+                                {% for judge in judges %}
                                 <li class="list-group-item">
                                     <div class="d-flex align-items-center">
                                         <div class="p-image">
-                                            <img src="{% static 'images/bt1.png'%}" alt="">
+                                            <img src="{{ judge.judge.profile_picture.url }}" alt="judge profile picture">
                                         </div>
                                         <div class="p-text">
-                                            <span>John Doe</span>
+                                            <span>{{ judge.judge.user.first_name }} {{ judge.judge.user.first_name }} </span>
                                         </div>
                                     </div>
                                 </li>
+                                {% empty %}
                                 <li class="list-group-item">
-                                    <div class="d-flex align-items-center">
-                                        <div class="p-image">
-                                            <img src="{% static 'images/bt1.png'%}" alt="">
-                                        </div>
-                                        <div class="p-text">
-                                            <span>John Doe</span>
-                                        </div>
-                                    </div>
+                                    <span class="text-muted text-center">No judges for this poll</span>
                                 </li>
-                                <li class="list-group-item">
-                                    <div class="d-flex align-items-center">
-                                        <div class="p-image">
-                                            <img src="{% static 'images/bt1.png'%}" alt="">
-                                        </div>
-                                        <div class="p-text">
-                                            <span>John Doe</span>
-                                        </div>
-                                    </div>
-                                </li>
+                                {% endfor %}
                             </ul>
                         </div>
 
                         <!-- upload link -->
                         <div class="col-sm-12 col-md-4">
-                            <div class="upload-link shadow-card">
+                            <div class="upload-link">
                                 <form method="POST" id="projectLinkForm">
                                     {% csrf_token %}
                                     <div class="ads-input-wrapper d-flex my-5">
@@ -147,13 +129,15 @@
                                             <i class="fa fa-upload"></i>
                                         </button>
                                     </div>
-                                    <p class="text-center text-light btn btn-primary">
-                                        {% if current_poll.project_link != "" %}
-                                            {{ current_poll.project_link }}
-                                        {% else %}
-                                            Not Found
-                                        {% endif %}
+                                    {% if participant_poll.is_uploaded %}
+                                    <p class="text-center text-light btn btn-primary apple-font">
+                                        {{ participant_poll.project_link }}
                                     </p>
+                                    {% else %}
+                                    <p class="text-muted apple-font">
+                                        You have not uploaded any link
+                                    </p>
+                                    {% endif %}
                                 </form>
                             </div>
                         </div>

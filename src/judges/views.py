@@ -44,16 +44,18 @@ class JudgesProfileDashboard(LoginRequiredMixin, View):
 class JudgesProfileUpdate(LoginRequiredMixin, UserPassesTestMixin, View):
     def get(self, request, *args, **kwargs):
         template_name = "participants/profile_update.html"
+        judge_profile = JudgeProfile.objects.get(user=self.request.user)
 
         #! populate template form 
         context = {
             "main_form": UserUpdateForm(instance=request.user),
             "secondary_form": JudgesUpdateForm(instance=request.user.judgeprofile),
+            "polls" : JudgesPoll.objects.filter(judge=judge_profile),
         }
         return render(request, template_name, context)
 
     def post(self, request, *args, **kwargs):
-        user_update_form = UserUpdateForm(request.POST, request.FILES, request.user)
+        user_update_form = UserUpdateForm(request.POST, instance=request.user)
         judge_update_form =  JudgesUpdateForm(request.POST, request.FILES, instance=request.user.judgeprofile)
 
         #! check if both submotted forms are valid
@@ -91,6 +93,7 @@ class JudgePollDashboard(LoginRequiredMixin, TemplateView):
         context['account_type'] = 'judge'
         context['judge_status'] = self.request.user.is_judge
         context['is_voted'] = is_voted
+        context['current_poll'] = current_poll
         return context
 
 

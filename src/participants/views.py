@@ -1,14 +1,17 @@
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 from django.db import models
 from django.http.response import HttpResponse, JsonResponse
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls.base import reverse_lazy
 from django.views.generic import TemplateView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic.base import View
 from django.views.generic.edit import CreateView
+from core.forms import UserUpdateForm
 
 from core.models import CustomUser
+from judges.models import JudgeProfile, JudgesPoll
+from participants.forms import ParticipantUpdateForm
 from polls.models import Polls
 from .models import Participant, ParticipantPolls
 
@@ -43,15 +46,19 @@ class ParticipantPollsDashboard(LoginRequiredMixin, TemplateView):
         current_poll = get_object_or_404(Polls, address=poll_address)
         participant = Participant.objects.get(user=self.request.user)
         all_participants = ParticipantPolls.objects.filter(polls=current_poll)
+        participant_poll = ParticipantPolls.objects.get(
+            participant=participant, 
+            polls=current_poll
+        )
+        judges = JudgesPoll.objects.filter(polls=current_poll)
 
 
         context['participants'] = all_participants
         context['polls'] = ParticipantPolls.objects.filter(participant=participant)
-        context['current_poll'] = ParticipantPolls.objects.get(
-            participant=participant, 
-            polls=current_poll
-        )
+        context['current_poll'] = current_poll
         context['poll_address'] = poll_address
+        context['judges'] = judges
+        context['participant_poll'] = participant_poll
         return context
 
 class ParticipantProfileDetail(LoginRequiredMixin, TemplateView):
@@ -65,6 +72,36 @@ class ParticipantProfileDetail(LoginRequiredMixin, TemplateView):
         context['polls'] = ParticipantPolls.objects.filter(participant=participant)
         context['participants'] = all_participants
         return context
+
+class ParticipantProfileUpdate(LoginRequiredMixin, UserPassesTestMixin, View):
+    def get(self, request, *args, **kwargs):
+        template_name = "participants/profile_update.html"
+
+        #! populate template form 
+        context = {
+            "main_form": UserUpdateForm(instance=request.user),
+            "secondary_form": ParticipantUpdateForm(instance=request.user.participant),
+        }
+        return render(request, template_name, context)
+
+    def post(self, request, *args, **kwargs):
+        user_update_form = UserUpdateForm(request.POST, request.user)
+        judge_update_form =  ParticipantUpdateForm(request.POST, request.FILES, instance=request.user.participant)
+
+        #! check if both submotted forms are valid
+        if user_update_form.is_valid() and judge_update_form.is_valid():
+            user_update_form.save()
+            judge_update_form.save()
+            return redirect("participant_profile")
+        else:
+            print(user_update_form.is_valid)
+            print(judge_update_form.is_valid())
+            return JsonResponse({"error": request.POST})
+
+    def test_func(self) -> Optional[bool]:
+        if not self.request.user.is_participant:
+            return False
+        return True
 
 class JoinPoll(LoginRequiredMixin, View):
     def post(self, request, *args, **kwargs):

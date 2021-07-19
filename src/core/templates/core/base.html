@@ -1,11 +1,12 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <!-- use in development -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/sidenav.css' %}">
@@ -21,7 +22,21 @@
 
     <title>Polling System </title>
 </head>
-<body>
+
+<body style="position: relative;">
+    {% if messages %}
+    {% for message in messages %}
+    <div 
+        class="alert alert alert-dismissible fade show bg-{{ message.tags }} animate__animated animate__fadeInRight animate__fast" 
+        role="alert"
+        style="position: absolute; z-index: 9999; top: 50px; right: 20px;">
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <small class="text-dark">
+            <i class="fa fa-exclamation-triangle"></i> {{ message }}
+        </small>
+    </div>
+    {% endfor %}
+    {% endif %}
     {% block content %}{% endblock %}
     <!-- CDN: use in production -->
     <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></scriptsrc=src=src=src=> -->
@@ -32,4 +47,5 @@
     <script src="{% static 'js/app.js' %}"></script>
     <script src="{% static 'js/sidenav.js' %}"></script>
 </body>
+
 </html>
