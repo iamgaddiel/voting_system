@@ -36,7 +36,11 @@ class ParticipantPolls(models.Model):
             self.total_rating
         )
     
-    def get_avarage_rating(self):
+    def get_avarage_rating(self) -> float:
+        """
+        returns avarage user rating
+        average = total user rating / number of votes
+        """
         avarage = 0 if self.vote_count == 0 else self.total_rating / self.vote_count
         return avarage
 
