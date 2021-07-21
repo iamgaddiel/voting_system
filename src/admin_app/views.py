@@ -212,8 +212,13 @@ class ListParticipants(LoginRequiredMixin, UserPassesTestMixin, ListView):
 
 class DeleteParticipant(LoginRequiredMixin, UserPassesTestMixin, View):
     def get(self, *args, **kwargs):
-        get_object_or_404(Participant, id=kwargs.get('id')).delete()
+        get_object_or_404(CustomUser, id=self.kwargs.get('id')).delete()
         return redirect('admin_participants_list')
+
+    def test_func(self) -> Optional[bool]:
+        if self.request.user.is_admin:
+            return True
+        return False
 
 class GetParticipant(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
     template_name = 'admin/user_detail.html'
