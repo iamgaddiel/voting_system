@@ -33,19 +33,17 @@ class CodeVerification(LoginRequiredMixin, View):
         code = utils.get_random_text(10)
         message = f"Dear {request.user.username}\nThis is your verification code  \n{code}"
         # !delete current user code if found
-        # !create a new code
+        # !then create a new code for the user
         try:
-            temp_code = TempAccessCodes.objects.get(user=request.user)
-            if temp_code:
-                temp_code.delete()
+            temp_code = TempAccessCodes.objects.filter(user=request.user)
+            if temp_code.count() == 0:
                 TempAccessCodes.objects.create(user=request.user, code=code)
-                utils.send_mail("Verification Code", message, [request.user.username])
+            else:
+                temp_code.first().delete()
+                TempAccessCodes.objects.create(user=request.user, code=code)
+            utils.send_mail("Verification Code", message, [request.user.username])
                 
-        except TempAccessCodes.DoesNotExist:
-            TempAccessCodes.objects.create(user=request.user, code=code)
-            utils.send_mail("Verification Code", message,[request.user.username])
-        
-        #? handle no internet connection
+        #handles no internet connection
         except socket.gaierror:
             messages.warning(request, "No internet connection")
             return render(request, self.template_name, self.context)     
