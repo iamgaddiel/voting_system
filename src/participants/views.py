@@ -85,7 +85,7 @@ class ParticipantProfileUpdate(LoginRequiredMixin, UserPassesTestMixin, View):
         return render(request, template_name, context)
 
     def post(self, request, *args, **kwargs):
-        user_update_form = UserUpdateForm(request.POST, request.user)
+        user_update_form = UserUpdateForm(request.POST, instance=request.user)
         judge_update_form =  ParticipantUpdateForm(request.POST, request.FILES, instance=request.user.participant)
 
         #! check if both submotted forms are valid
