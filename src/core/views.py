@@ -1,5 +1,6 @@
 from typing import Any, Dict
 import socket
+import smtplib
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.http.response import HttpResponse
@@ -7,8 +8,8 @@ from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import TemplateView, CreateView, View, FormView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from judges.models import JudgeProfile
 
+from judges.models import JudgeProfile
 from participants.models import Participant
 from .models import CustomUser, TempAccessCodes
 from .forms import UserCreationForm, VerificationForm
@@ -41,12 +42,17 @@ class CodeVerification(LoginRequiredMixin, View):
             else:
                 temp_code.first().delete()
                 TempAccessCodes.objects.create(user=request.user, code=code)
-            utils.send_mail("Verification Code", message, [request.user.username])
+            utils.send_mail("Verification Code", message, [request.user.email])
                 
         #handles no internet connection
         except socket.gaierror:
             messages.warning(request, "No internet connection")
-            return render(request, self.template_name, self.context)     
+        
+        except smtplib.SMTPConnectError:
+            messages.warning(request, "Mail connection failed")
+
+        except smtplib.SMTPRecipientsRefused:
+            messages.warning(request, "Mail service down")
 
         return render(request, self.template_name, self.context)
 
