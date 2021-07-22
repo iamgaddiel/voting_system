@@ -36,7 +36,7 @@ urlpatterns = [
     path('polls/delete/', DeleteAllPolls.as_view(), name="admin_polls_delete"),
     path('polls/delete/<int:pk>/', DeleteSinglePoll.as_view(), name="admin_delete_all_polls"),
     path('polls/update/<int:pk>/', UpdatePoll.as_view(), name="admin_update_polls"),
-    path('polls/get/<int:pk>/', GetPoll.as_view(), name="admin_polls_detail"),
+    path('polls/get/<pk>/', GetPoll.as_view(), name="admin_polls_detail"),
 
     # ================== [participants] ==============================
     path('participants/list/', ListParticipants.as_view(), name="admin_participants_list"),

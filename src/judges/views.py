@@ -6,6 +6,7 @@ from django.views.generic import TemplateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic.base import View
 from django.contrib.auth.decorators import login_required, user_passes_test
+from django.db.models import Q
 from core.forms import UserUpdateForm
 from judges.forms import JudgesUpdateForm
 

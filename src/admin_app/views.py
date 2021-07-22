@@ -109,17 +109,19 @@ class UpdatePoll(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
             return True
         return False
 
-class GetPoll(UserPassesTestMixin, LoginRequiredMixin, DetailView):
+class GetPoll(UserPassesTestMixin, LoginRequiredMixin, TemplateView):
     template_name = "admin/get_polls.html"
-    queryset = Polls.objects.all()
     context_object_name = "poll"
+
+    def get_queryset(self) -> models.query.QuerySet:
+        # get poll address from url parameter
+        return Polls.objects.get(address=self.kwargs.get('pk'))
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        current_poll = get_object_or_404(Polls, pk=self.kwargs.get('pk')) # get poll address from url parameter
-
-        context['participants'] = ParticipantPolls.objects.filter(polls=current_poll)
-        context['judges'] = JudgesPoll.objects.filter(polls=current_poll)
+        context['poll'] = self.get_queryset()
+        context['participants'] = ParticipantPolls.objects.filter(polls=self.get_queryset())
+        context['judges'] = JudgesPoll.objects.filter(polls=self.get_queryset())
         context['account_type'] = 'admin'
         return context
 

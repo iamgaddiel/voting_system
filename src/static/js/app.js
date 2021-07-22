@@ -129,9 +129,12 @@ $(() => {
 
     async function getCurrentRanking() {
         try {
-            const pollAddress = location.pathname.split('/')[5]
-            const endPoint = `${baseUrl}judges/en/get/participant/rankings/${[pollAddress]}`
+            const pathnameLength  = location.pathname.split('/')
+            const pollAddress = pathnameLength[pathnameLength.length - 2 ]
+            console.log(pollAddress)
+            const endPoint = `${baseUrl}judges/en/get/participant/rankings/${pollAddress}`
             const { data, error } = await fetchData(endPoint)
+
 
             if (!data) {
                 console.error(error)
